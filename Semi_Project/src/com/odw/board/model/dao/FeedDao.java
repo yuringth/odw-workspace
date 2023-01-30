@@ -603,6 +603,49 @@ public class FeedDao {
 	}
 
 
+	// 메인화면에 피드게시판 글 목록 불러오기
+	public ArrayList<Board> selectFeedPreview(Connection conn) {
+		
+		ArrayList<Board> list = new ArrayList();
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectFeedPreview");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Board b = new Board();
+
+				
+			    b.setTitleImg(rset.getString("TITLEIMG"));
+				b.setBoardContent(rset.getString("BOARD_CONTENT"));
+				b.setMemId(rset.getString("MEM_ID"));
+				b.setBoardCount(rset.getInt("LIKE_COUNT"));
+				
+			
+				list.add(b);
+			
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;		
+	}
+
+
 }
 	
  

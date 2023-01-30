@@ -292,6 +292,21 @@ public class FeedService {
 		
 		return result;
 	}
+
+
+
+	// 메인화면에 피드게시판 글 목록 불러오기
+	public ArrayList<Board> selectFeedPreview() {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Board> list = new FeedDao().selectFeedPreview(conn);
+		
+		close(conn);
+		
+		return list;	
+		
+	}
 	
 
 	

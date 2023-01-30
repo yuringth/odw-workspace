@@ -316,6 +316,36 @@
 	
 	
 	
+	<!-- 메인화면에 피드게시판 글 목록 불러오기 -->
+	<entry key="selectFeedPreview">
+		SELECT * 
+		        FROM(SELECT ROWNUM RNUM, A.*
+		            FROM(
+		                SELECT 
+		                        FILE_PATH||CHANGE_NAME TITLEIMG,
+		                        BOARD_CONTENT,
+		                        MEM_ID,
+		                        LIKE_COUNT
+		                FROM
+		                        BOARD B
+		                JOIN
+		                        MEMBER
+		                USING
+		                        (MEM_NO)
+		                JOIN
+		                        ATTACHMENT AT
+		                ON
+		                        (B.BOARD_NO = AT.BOARD_NO)
+		                WHERE
+		                        B.BOARD_NAME = '피드게시판'
+		                AND 
+		                        BOARD_DELETE_STATUS = 'N'
+		                ORDER 
+		                    BY 
+		                        B.CREATE_DATE DESC) A)
+		WHERE RNUM BETWEEN 1 AND 4
+	</entry>
+	
 	
 	
 	
