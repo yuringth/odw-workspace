@@ -503,133 +503,6 @@
                         <div class="slider-wrap align-left" id="feedPreview-Content">
 
                             
-                            <!--슬라이드 한 칸-->
-                            <div class="withboard-slide-outer">
-                                <!--내용물 -->
-                                <div class="lign-left-wrap">
-                                    <!--이미지div-->
-                                    <div class="withboard-img align-left">
-                                        <img width="235" height="220"
-                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMt4bQTo6iJzLSEjnqLss9yBKyLbEC6HZGgw&usqp=CAU">
-                                    </div>
-                                    <!--상세내용 div-->
-                                    <div class="withboard-content">
-                                        <div class="content-margin">
-                                            제목~~~...
-                                        </div>
-                                        <div class="withboard-content-detail content-margin">
-                                            <div class="align-left-inline">
-                                                <img src="" alt="프로필">
-                                                <p>아이디</p>
-                                            </div>
-                                            <div class="align-right-inline">
-                                                <div class="align-left-inline">
-                                                    <img src="" alt="a">
-                                                    <p>좋아요</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <!--슬라이드 한 칸-->
-                            <div class="withboard-slide-outer">
-                                <!--내용물 -->
-                                <div class="lign-left-wrap">
-                                    <!--이미지div-->
-                                    <div class="withboard-img align-left">
-                                        <img width="235" height="220"
-                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMt4bQTo6iJzLSEjnqLss9yBKyLbEC6HZGgw&usqp=CAU">
-                                    </div>
-                                    <!--상세내용 div-->
-                                    <div class="withboard-content">
-                                        <div class="content-margin">
-                                            제목~~~...
-                                        </div>
-                                        <div class="withboard-content-detail content-margin">
-                                            <div class="align-left-inline">
-                                                <img src="" alt="프로필">
-                                                <p>아이디</p>
-                                            </div>
-                                            <div class="align-right-inline">
-                                                <div class="align-left-inline">
-                                                    <img src="" alt="a">
-                                                    <p>좋아요</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-                            <!--슬라이드 한 칸-->
-                            <div class="withboard-slide-outer">
-                                <!--내용물 -->
-                                <div class="lign-left-wrap">
-                                    <!--이미지div-->
-                                    <div class="withboard-img align-left">
-                                        <img width="235" height="220"
-                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMt4bQTo6iJzLSEjnqLss9yBKyLbEC6HZGgw&usqp=CAU">
-                                    </div>
-                                    <!--상세내용 div-->
-                                    <div class="withboard-content">
-                                        <div class="content-margin">
-                                            제목~~~...
-                                        </div>
-                                        <div class="withboard-content-detail content-margin">
-                                            <div class="align-left-inline">
-                                                <img src="" alt="프로필">
-                                                <p>아이디</p>
-                                            </div>
-                                            <div class="align-right-inline">
-                                                <div class="align-left-inline">
-                                                    <img src="" alt="a">
-                                                    <p>좋아요</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                            <!--슬라이드 한 칸-->
-                            <div class="withboard-slide-outer">
-                                <!--내용물 -->
-                                <div class="lign-left-wrap">
-                                    <!--이미지div-->
-                                    <div class="withboard-img align-left">
-                                        <img width="235" height="220"
-                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMt4bQTo6iJzLSEjnqLss9yBKyLbEC6HZGgw&usqp=CAU">
-                                    </div>
-                                    <!--상세내용 div-->
-                                    <div class="withboard-content">
-                                        <div class="content-margin">
-                                            제목~~~...
-                                        </div>
-
-                                        <div class="withboard-content-detail content-margin">
-                                            <div class="align-left-inline">
-                                                <img src="" alt="프로필">
-                                                <p>아이디</p>
-                                            </div>
-                                            <div class="align-right-inline">
-                                                <div class="align-left-inline">
-                                                    <img src="" alt="a">
-                                                    <p>좋아요</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
 
 
                         </div>
@@ -652,7 +525,6 @@
 						
 						success : function(list){
 							
-							console.log(list);
 							var result = '';
 							
 							for(var i in list){
@@ -663,8 +535,13 @@
 		                               +        '<img src=' + list[i].titleImg + '; width="235" height="220">'
 		                               +       '</div>'
 		                               +       '<div class="withboard-content">'
+		                               
+		                               +       '<div class="content-margin">'
+		                               +          '<b></b>'
+		                               +       '</div>'
+		                               
 		                               +        '<div class="content-margin">'
-		                               +          '<b>' + list[i].boardContent + '</b>'
+		                               +          '<p>' + list[i].boardContent + '</p>'
 		                               +        '</div>'
 		                               +        '<div class="withboard-content-detail content-margin">'
 		                               +           '<div class="align-left-inline">'
@@ -673,21 +550,17 @@
 		                               +        '</div>'
 		                               +        '<div class="align-right-inline">'
 		                               +          '<div class="align-left-inline">'
-		                               +            '&nbsp;<img src="<%=contextPath%>/resources/click.png">'                                
-		                               +           '<p>' + '조회수' + list[i].likeCount + '</p>'
+		                               +            '<p> ♥ </p>'                                
+		                               +           '<p>' + '좋아요 ' + list[i].likeCount + '</p>'
                                        +        '</div>'
-                                       +'</div>'
-                                       +'</div>'
-                                       +'</div>'
-                                       +'</div>'
-									
-									
-									
+                                       +       '</div>'
+                                       +      '</div>'
+                                       +     '</div>'
+                                       +    '</div>'
+                                       +   '</div>'
+                                       
 							};
-							
 		                    $('#feedPreview-Content').html(result);
- 
-							
 						},
 						
 						error : function(){

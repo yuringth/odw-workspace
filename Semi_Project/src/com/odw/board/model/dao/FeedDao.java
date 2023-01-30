@@ -628,7 +628,7 @@ public class FeedDao {
 			    b.setTitleImg(rset.getString("TITLEIMG"));
 				b.setBoardContent(rset.getString("BOARD_CONTENT"));
 				b.setMemId(rset.getString("MEM_ID"));
-				b.setBoardCount(rset.getInt("LIKE_COUNT"));
+				b.setLikeCount(rset.getInt("LIKE_COUNT"));
 				
 			
 				list.add(b);
