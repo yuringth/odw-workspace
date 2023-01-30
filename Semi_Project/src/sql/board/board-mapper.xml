@@ -1,0 +1,887 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"><!-- 이 라인은 문서를 검사해주는 역할을해서 잘못 쓴 것은 빨간줄이 간다. -->
+<properties>
+<!-- 충원님 -->
+
+<entry key="mySelectListCount">
+SELECT
+		COUNT(*)
+ FROM
+ 		BOARD
+ JOIN
+ 		MEMBER USING(MEM_NO)
+ WHERE
+ 		BOARD_DELETE_STATUS = 'N'
+   AND
+   		MEM_ID = ?
+
+
+
+
+</entry>
+<entry key="selectMyBoardList">
+SELECT *
+FROM (SELECT 
+		  	 ROWNUM RNUM, 
+		  	 A.*
+			 FROM 
+					(SELECT
+		                     BOARD_NO,
+		                     BOARD_TITLE,
+		                     BOARD_NAME,
+		                     BOARD_CONTENT,
+		                     CREATE_DATE,
+		                     BOARD_COUNT
+				 	 FROM
+				             BOARD
+				     JOIN
+				             MEMBER USING(MEM_NO)
+				    WHERE
+				             MEM_ID = ?
+				      AND
+                             BOARD_DELETE_STATUS = 'N'
+				    ORDER
+				       BY
+				             CREATE_DATE DESC) A)
+WHERE 
+		RNUM BETWEEN ? AND ?
+
+</entry>
+<entry key="increaseCount">
+UPDATE
+   		BOARD
+   SET
+   		BOARD_COUNT = BOARD_COUNT + 1
+ WHERE
+ 		BOARD_NO = ?
+   AND
+   		BOARD_DELETE_STATUS = 'N'
+
+</entry>
+<entry key="selectBoard">
+SELECT
+		BOARD_NAME,
+		BOARD_TITLE,
+		MEM_NO,
+		CREATE_DATE,
+		BOARD_CONTENT
+  FROM
+  		BOARD
+  JOIN
+		MEMBER
+ USING
+ 		(MEM_NO)
+ WHERE
+   		BOARD_NO = ?
+   AND
+   		MEM_NO = ?
+   AND
+   		BOARD_DELETE_STATUS = 'N'
+ ORDER
+ 	BY
+ 		CREATE_DATE DESC
+   		
+   		
+		
+
+
+
+
+</entry>
+<entry key="selectQna">
+SELECT
+		BOARD_NAME,
+		QNA_TITLE,
+		Q.MEM_NO,
+		QNA_CREATE_DATE,
+		QNA_CONTENT,
+		ANSWER_CONTENT
+  FROM
+  		QNA Q
+  JOIN
+		MEMBER M ON(M.MEM_NO = Q.MEM_NO)
+  JOIN
+  		BOARD B ON(B.MEM_NO = Q.MEM_NO)
+ WHERE
+   		Q.MEM_NO = ?
+   AND
+   		BOARD_DELETE_STATUS = 'N'
+ ORDER
+ 	BY
+ 		CREATE_DATE DESC
+   		
+   		
+		
+
+
+
+
+</entry>
+<entry key="selectAttachment">
+SELECT
+       FILE_NO,
+       ORIGIN_NAME,
+       CHANGE_NAME,
+       FILE_PATH
+FROM
+       ATTACHMENT
+WHERE
+       BOARD_NO = ?
+
+</entry>
+<entry key="selectReplyListCount">
+SELECT
+		COUNT(*)
+ FROM
+ 		REPLY R
+ JOIN
+ 		MEMBER M ON (R.MEM_NO = M.MEM_NO)
+ WHERE
+ 		M.MEM_NO = ?
+   AND
+   		REPLY_DELETE_YN = 'N'
+ 
+  
+
+</entry>
+<entry key="selectMyReply">
+SELECT *
+FROM (SELECT 
+		  	 ROWNUM RNUM, 
+		  	 A.*
+			 FROM 
+					(SELECT
+		                     B.BOARD_NO,
+		                     BOARD_TITLE,
+		                     BOARD_NAME,
+		                     REPLY_CONTENT,
+		                     REPLY_CREATE_DATE
+				 	 FROM
+				             BOARD B
+				     JOIN
+				             MEMBER M ON(M.MEM_NO = B.MEM_NO)
+				     JOIN
+				     		 REPLY R ON(R.BOARD_NO = B.BOARD_NO)
+				    WHERE
+				             M.MEM_NO = ?
+				      AND
+                             BOARD_DELETE_STATUS = 'N'
+                      AND
+                      		 REPLY_DELETE_YN = 'N'
+				    ORDER
+				       BY
+				             CREATE_DATE DESC) A)
+WHERE 
+		RNUM BETWEEN ? AND ?
+
+</entry>
+<entry key="myLikeListCount">
+SELECT
+		COUNT(*)
+  FROM
+ 		BOARD B
+  JOIN
+  		 HEART H ON(H.BOARD_NO = B.BOARD_NO)
+  JOIN
+  		 MEMBER M ON(M.MEM_NO = B.MEM_NO)
+ WHERE
+		M.MEM_ID = ?
+   AND
+        HEART_YN = 'Y'
+   AND
+   		BOARD_DELETE_STATUS = 'N'
+
+</entry>
+<entry key="myLikeList">
+SELECT  *
+		
+  FROM
+  		(SELECT ROWNUM RNUM,
+  			A.*
+  			FROM
+  				(SELECT DISTINCT
+  						B.BOARD_NO,
+  						BOARD_TITLE,
+  						CREATE_DATE,
+  						BOARD_COUNT,
+  						LIKE_COUNT
+  				  FROM
+  				  		HEART H
+  				  JOIN
+  				  		BOARD B ON(H.BOARD_NO = B.BOARD_NO)
+  				  JOIN
+  				  		MEMBER M ON(M.MEM_NO = B.MEM_NO)
+  				  WHERE
+  				  		M.MEM_ID = ?
+  				  	AND
+  				  		BOARD_DELETE_STATUS = 'N'
+  				  ORDER
+  				     BY
+  				     	CREATE_DATE DESC) A)
+ WHERE
+ 		RNUM BETWEEN ? AND ?
+</entry>
+<entry key="myQuestionCount">
+SELECT
+		COUNT(*)
+  FROM
+  		QNA
+  JOIN
+  		MEMBER USING(MEM_NO)
+ WHERE
+ 		MEM_ID = ?
+</entry>
+<entry key="myQuestionList">
+SELECT *
+  FROM
+  		(SELECT ROWNUM RNUM,
+  			A.*
+  			FROM
+  				(SELECT DISTINCT
+  						QNA_NO,
+  						QNA_TITLE,
+  						QNA_CREATE_DATE,
+  						QNA_CHECK
+  				  FROM
+  				  		QNA Q
+  				  JOIN
+  				  		MEMBER M ON(M.MEM_NO = Q.MEM_NO)
+  				  JOIN
+  				  		BOARD B ON(B.MEM_NO = Q.MEM_NO)
+  				  WHERE
+  				  		MEM_ID = ?
+  				  ORDER
+  				     BY
+  				     	QNA_CREATE_DATE DESC) A)
+ WHERE
+ 		RNUM BETWEEN ? AND ?
+   
+
+
+</entry>
+	
+
+<entry key="myWithList">
+<!-- 내가 동행 신청 -->
+SELECT
+		B.BOARD_NO,
+		BOARD_TITLE,
+		DP_DATE
+  FROM
+  		BOARD B
+  JOIN
+        MEMBER USING(MEM_NO)
+   JOIN 
+   		ACCEPT USING(MEM_NO)
+ WHERE
+ 		MEM_NO =  ?
+   AND
+   		BOARD_DELETE_STATUS = 'N'
+   AND
+   		APPLY_YN = 'Y'
+ ORDER
+	BY
+		CREATE_DATE DESC
+
+
+</entry>
+<entry key="myRecruitList">
+<!-- 내가 동행 모집 -->
+SELECT 
+		BOARD_NO,
+		BOARD_TITLE,
+		DP_DATE
+  FROM
+  		BOARD
+  JOIN
+  		MEMBER USING(MEM_NO)
+ WHERE
+ 		MEM_NO = ?
+   AND
+   		BOARD_DELETE_STATUS = 'N'
+   AND
+        BOARD_NAME = '동행게시판'
+ ORDER
+	BY
+		CREATE_DATE DESC
+</entry>
+
+
+
+
+
+
+
+
+
+
+<!-- 유림곤듀 -->
+
+<entry key="selectListCount">
+SELECT
+		COUNT(*)
+ FROM
+ 		BOARD
+ JOIN
+ 		MEMBER USING(MEM_NO)
+ WHERE
+ 		BOARD_DELETE_STATUS = 'N'
+   AND
+   		MEM_ID = ?
+
+
+
+
+</entry>
+<entry key="selectMyBoardList">
+SELECT *
+FROM (SELECT 
+		  	 ROWNUM RNUM, 
+		  	 A.*
+			 FROM 
+					(SELECT
+		                     BOARD_NO,
+		                     BOARD_TITLE,
+		                     BOARD_NAME,
+		                     BOARD_CONTENT,
+		                     CREATE_DATE,
+		                     BOARD_COUNT
+				 	 FROM
+				             BOARD
+				     JOIN
+				             MEMBER USING(MEM_NO)
+				    WHERE
+				             MEM_ID = ?
+				      AND
+                             BOARD_DELETE_STATUS = 'N'
+				    ORDER
+				       BY
+				             CREATE_DATE DESC) A)
+WHERE 
+		RNUM BETWEEN ? AND ?
+
+</entry>
+<entry key="increaseCount">
+UPDATE
+   		BOARD
+   SET
+   		BOARD_COUNT = BOARD_COUNT + 1
+ WHERE
+ 		BOARD_NO = ?
+   AND
+   		BOARD_DELETE_STATUS = 'N'
+
+</entry>
+<entry key="selectBoard">
+SELECT
+		BOARD_NAME,
+		BOARD_TITLE,
+		MEM_NO,
+		CREATE_DATE,
+		BOARD_CONTENT
+  FROM
+  		BOARD
+  JOIN
+		MEMBER
+ USING
+ 		(MEM_NO)
+ WHERE
+   		BOARD_NO = ?
+   AND
+   		BOARD_DELETE_STATUS = 'N'
+ ORDER
+ 	BY
+ 		CREATE_DATE DESC
+   		
+   		
+		
+
+
+
+
+</entry>
+<entry key="selectAttachment">
+SELECT
+       FILE_NO,
+       ORIGIN_NAME,
+       CHANGE_NAME,
+       FILE_PATH
+FROM
+       ATTACHMENT
+WHERE
+       BOARD_NO = ?
+
+</entry>
+<entry key="selectReplyListCount">
+SELECT
+		COUNT(*)
+ FROM
+ 		REPLY
+ JOIN
+ 		MEMBER USING(MEM_NO)
+ WHERE
+ 		MEM_ID = ?
+   AND
+   		REPLY_DELETE_YN = 'N'
+
+</entry>
+<entry key="selectMyReply">
+SELECT *
+FROM (SELECT 
+		  	 ROWNUM RNUM, 
+		  	 A.*
+			 FROM 
+					(SELECT
+		                     BOARD_NO,
+		                     BOARD_TITLE,
+		                     BOARD_NAME,
+		                     REPLY_CONTENT,
+		                     REPLY_CREATE_DATE
+				 	 FROM
+				             BOARD
+				     JOIN
+				             MEMBER M USING(M.MEM_NO)
+				     JOIN
+				     		 REPLY R USING(R.MEM_NO)
+				    WHERE
+				             MEM_ID = ?
+				      AND
+                             BOARD_DELETE_STATUS = 'N'
+                      AND
+                      		 REPLY_DELETE_YN = 'N'
+				    ORDER
+				       BY
+				             CREATE_DATE DESC) A)
+WHERE 
+		RNUM BETWEEN ? AND ?
+
+</entry>
+<entry key="myLikeListCount">
+SELECT
+		COUNT(*)
+  FROM
+ 		BOARD B
+  JOIN
+  		 HEART H ON(H.BOARD_NO = B.BOARD_NO)
+  JOIN
+  		 MEMBER M ON(M.MEM_NO = B.MEM_NO)
+ WHERE
+		MEM_ID = ?
+   AND
+        HEART_YN = 'Y'
+   AND
+   		BOARD_DELETE_STATUS = 'N'
+
+</entry>
+<entry key="myLikeList">
+SELECT  *
+		
+  FROM
+  		(SELECT ROWNUM RNUM,
+  			A.*
+  			FROM
+  				(SELECT
+  						B.BOARD_NO,
+  						BOARD_TITLE,
+  						CREATE_DATE,
+  						BOARD_COUNT,
+  						LIKE_COUNT
+  				  FROM
+  				  		BOARD B
+  				  JOIN
+  				  		HEART H ON(H.BOARD_NO = B.BOARD_NO)
+  				  JOIN
+  				  		MEMBER M ON(M.MEM_NO = B.MEM_NO)
+  				  WHERE
+  				  		MEM_ID = ?
+  				  	AND
+  				  		HEART_YN = 'Y'
+  				  	AND
+  				  		BOARD_DELETE_STATUS = 'N'
+  				  ORDER
+  				     BY
+  				     	CREATE_DATE DESC) A)
+ WHERE
+ 		RNUM BETWEEN ? AND ?
+</entry>
+<entry key="myQuestionCount">
+SELECT
+		COUNT(*)
+  FROM
+  		QNA
+  JOIN
+  		MEMBER USING(MEM_NO)
+ WHERE
+ 		MEM_ID = ?
+</entry>
+<entry key="myQuestionList">
+SELECT *
+  FROM
+  		(SELECT ROWNUM RNUM,
+  			A.*
+  			FROM
+  				(SELECT
+  						QNA_NO,
+  						QNA_TITLE,
+  						QNA_CREATE_DATE,
+  						QNA_CHECK
+  				  FROM
+  				  		QNA
+  				  JOIN
+  				  		MEMBER USING(MEM_NO)
+  				  WHERE
+  				  		MEM_ID = ?
+  				  		
+  				  ORDER
+  				     BY
+  				     	CREATE_DATE DESC) A)
+ WHERE
+ 		RNUM BETWEEN ? AND ?
+   
+
+
+</entry>
+	
+
+<entry key="myWithList">
+<!-- 내가 동행 신청 -->
+SELECT
+		B.BOARD_NO,
+		BOARD_TITLE,
+		DP_DATE
+  FROM
+  		BOARD B
+  JOIN
+        MEMBER USING(MEM_NO)
+   JOIN 
+   		ACCEPT USING(MEM_NO)
+ WHERE
+ 		MEM_NO =  ?
+   AND
+   		BOARD_DELETE_STATUS = 'N'
+   AND
+   		APPLY_YN = 'Y'
+ ORDER
+	BY
+		CREATE_DATE DESC;
+
+
+</entry>
+<entry key="myRecruitList">
+<!-- 내가 동행 모집 -->
+SELECT 
+		BOARD_NO,
+		BOARD_TITLE,
+		DP_DATE
+  FROM
+  		BOARD
+  JOIN
+  		MEMBER USING(MEM_NO)
+ WHERE
+ 		MEM_NO = ?
+   AND
+   		BOARD_DELETE_STATUS = 'N'
+   AND
+        BOARD_NAME = '동행게시판'
+ ORDER
+	BY
+		CREATE_DATE DESC
+</entry>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 유림곤듀 -->
+ 	
+ 	
+ 	<entry key="selectListCount">
+	 	SELECT 
+		       COUNT(*)
+		  FROM
+		       BOARD
+		 WHERE
+		       BOARD_DELETE_STATUS = 'N'
+		   AND
+		       BOARD_NAME = '자유게시판'	
+ 	</entry>
+ 
+ 
+ 	<entry key="selectFreeList">
+		SELECT *
+		FROM(SELECT
+		          ROWNUM RNUM,
+		          A.*
+		    FROM
+		        (SELECT
+		              BOARD_NO,
+		              BOARD_CATEGORY,
+		              BOARD_TITLE,
+		              MEM_ID, 
+		              <!-- MEM_NO로 조인 -->
+		              CREATE_DATE,
+		              BOARD_COUNT
+		         FROM
+		             BOARD
+		        JOIN
+		             MEMBER USING(MEM_NO)
+		        WHERE
+		             BOARD_NAME = '자유게시판'
+		         AND
+		             BOARD_DELETE_STATUS = 'N'
+		        ORDER
+		           BY
+		             CREATE_DATE DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+ 	</entry>
+ 
+ 
+ 	<entry key="insertFreeBoard">
+ 		INSERT
+		  INTO
+		       BOARD
+		       (
+		       BOARD_NO,
+		       MEM_NO,
+		       BOARD_NAME,
+		       BOARD_CATEGORY,
+		       BOARD_TITLE,
+		       BOARD_CONTENT     
+		       )
+		 VALUES
+		      (
+		      SEQ_BNO.NEXTVAL,
+		      ?,
+		      '자유게시판',
+		      ?,
+		      ?,
+		      ?
+		      )
+ 	</entry>
+ 	
+ 	<entry key="insertFreeAttachment">
+	 	INSERT
+		  INTO
+		       ATTACHMENT
+		        (
+		        BOARD_NO,
+		        FILE_NO,
+		        ORIGIN_NAME,
+		        CHANGE_NAME,
+		        FILE_PATH
+		        )
+		VALUES
+		        (
+		        SEQ_BNO.CURRVAL,
+		        SEQ_FNO.NEXTVAL,
+		        ?,
+		        ?,
+		        ?
+		        )	
+ 	</entry>
+ 	
+ 	
+ 	<entry key="detailFreeBoard">
+	 	SELECT
+		      BOARD_NO,
+		      BOARD_CATEGORY,
+		      MEM_NO,
+		      BOARD_NAME,
+		      BOARD_TITLE,
+		      BOARD_CONTENT,
+		      MEM_ID,
+		      GENDER,
+		      BIRTH_DATE,
+		      GRADE
+		  FROM 
+		       BOARD
+		  JOIN
+		  	   MEMBER USING(MEM_NO)
+		 WHERE
+		       BOARD_NO = ?
+ 	</entry>
+ 	
+ 
+ 	<entry key="detailAttachmentBoard">
+	 	SELECT
+		      FILE_NO,
+		      ORIGIN_NAME,
+		      CHANGE_NAME,
+		      FILE_PATH,
+		      BOARD_NO
+		 FROM
+		      ATTACHMENT
+		 WHERE
+		      BOARD_NO = ?
+ 	</entry>
+ 	
+ 	<entry key="increaseCount">
+	 	UPDATE
+		       BOARD
+		  SET
+		      BOARD_COUNT = BOARD_COUNT + 1
+		WHERE
+		      BOARD_NO = ?
+		  AND
+		      BOARD_DELETE_STATUS = 'N'
+ 	</entry>
+ 	
+ 	
+ 	<entry key="selectFreeBoard">
+	 	SELECT
+	 		  BOARD_NO,
+		      BOARD_TITLE,
+		      BOARD_CONTENT,
+		      BOARD_CATEGORY
+		  FROM
+		      BOARD
+		WHERE
+		      BOARD_NO = ?
+		  AND
+		      BOARD_DELETE_STATUS = 'N'      
+ 	</entry>
+ 	
+ 	
+ 	<entry key="selectFreeAttachment">
+	 	SELECT
+		      FILE_NO,
+		      ORIGIN_NAME,
+		      CHANGE_NAME,
+		      FILE_PATH
+		FROM
+		      ATTACHMENT
+		 JOIN
+		      BOARD USING(BOARD_NO)
+		WHERE
+		      BOARD_NO = ?
+ 	</entry>
+ 	
+ 	
+ 	<entry key="updateFreeBoard">
+	 	UPDATE
+		      BOARD
+		  SET
+		      BOARD_TITLE = ?,
+		      BOARD_CONTENT = ?,
+		      BOARD_CATEGORY = ?
+		WHERE
+		      BOARD_NO = ?
+ 	</entry>
+ 
+ 	<entry key="updateFreeAttachment">
+	 	UPDATE
+		      ATTACHMENT
+		  SET
+		      ORIGIN_NAME = ?,
+		      CHANGE_NAME = ?,
+		      FILE_PATH = ?
+		WHERE
+		      FILE_NO = ?
+ 	</entry>
+ 
+ 	<entry key="insertFreeNewAttachment">
+	 	INSERT 
+		  INTO 
+		      ATTACHMENT
+		      (
+		      FILE_NO,
+		      BOARD_NO,
+		      ORIGIN_NAME,
+		      CHANGE_NAME,
+		      FILE_PATH
+		      )
+		VALUES
+		      (
+		      SEQ_FNO.NEXTVAL,
+		      ?,
+		      ?,
+		      ?,
+		      ?
+		      )
+ 	</entry>
+ 
+ 	<entry key="deleteFreeBoard">
+	 	UPDATE
+		      BOARD
+		  SET
+		      BOARD_DELETE_STATUS = 'Y'
+		WHERE
+		      BOARD_NO = ?
+        AND
+              BOARD_DELETE_STATUS = 'N' 	
+ 	</entry>
+ 
+
+
+
+
+	<!-- 댓글기능 -->
+	<entry key="selectFreeReplyList">
+	
+		SELECT
+		      REPLY_NO,
+		      MEM_ID,
+		      REPLY_CONTENT,
+		      TO_CHAR(REPLY_CREATE_DATE, 'YY/MM/DD HH:MI:SS') CREATE_DATE
+		<!-- TO_CHAR : 데이터타입을 문자로 바꿔주는 것 , 시간지정가능 / 별칭 -->     
+		FROM
+		      REPLY
+		JOIN
+		      MEMBER USING(MEM_NO)
+		WHERE
+		      BOARD_NO = ?
+		AND
+		      REPLY_DELETE_YN = 'N'
+		ORDER
+		   BY
+		      REPLY_CREATE_DATE ASC
+	</entry>
+
+	<entry key="insertReply">
+		INSERT
+		  INTO
+		      REPLY
+		      (
+		      REPLY_NO,
+		      MEM_NO,
+		      BOARD_NO,
+		      REPLY_CONTENT
+		      )
+		VALUES
+		      (
+		      SEQ_RPNO.NEXTVAL,
+		      ?,
+		      ?,
+		      ?
+		      )
+	</entry>
+	
+	
+	<!-- 댓글 삭제 -->
+	<entry key="deleteReply">
+		UPDATE
+		      REPLY
+		  SET
+		      REPLY_DELETE_YN = 'Y'
+		WHERE
+		      REPLY_NO = ?
+	</entry>
+
+	 
+</properties>
+ 	
+ 	
+
+	 

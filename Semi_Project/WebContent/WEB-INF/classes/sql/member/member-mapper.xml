@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	
+	
+	
+	
+	
+	<entry key="loginMember">
+		
+		SELECT 
+			MEM_NO, 
+			MEM_ID,
+			MEM_PWD,
+			MEM_NAME,
+			ADDRESS,
+			ADDRESS_DETAIL,
+			PHONE,
+			EMAIL,
+			BIRTH_DATE,
+			GENDER,
+			GRADE,
+			ENROLL_DATE,
+			STOP_YN,
+			STOP_DATE,
+			DROP_YN,
+			DROP_DATE,
+			REP_COUNT 
+		FROM 
+			MEMBER 
+		WHERE 
+			MEM_ID = ?
+		AND
+			MEM_PWD = ?
+		AND
+			STOP_YN = 'N'
+		AND
+			DROP_YN = 'N'
+				
+					
+	
+	</entry>
+
+
+
+
+
+
+
+	<entry key="idCheck">
+	
+		
+		SELECT 
+				COUNT(*)
+		FROM
+				MEMBER
+		WHERE
+				MEM_ID = ?
+	
+	
+	</entry>
+	
+	
+	
+	
+	
+	<entry key="findId">
+	
+	
+		SELECT
+			     MEM_ID
+			FROM
+			    MEMBER
+			WHERE
+			    MEM_NAME = ?
+			AND
+			    EMAIL = ?
+			AND
+			    STOP_YN = 'N'
+			AND
+			    DROP_YN = 'N'
+				
+	
+	
+	</entry>
+	
+	
+	
+	
+	
+	<entry key="findPwd">
+	
+		SELECT
+		     MEM_PWD
+		FROM
+		    MEMBER
+		WHERE
+		    MEM_NAME = ?
+		AND
+		    EMAIL = ?
+		AND
+		    STOP_YN = 'N'
+		AND
+		    DROP_YN = 'N'
+		AND
+		    MEM_ID = ?
+    
+	
+	
+	
+	
+	
+	</entry>
+	
+	
+	
+	<entry key="insertMember">
+	
+		INSERT
+		    INTO
+		        MEMBER
+		        (
+		            MEM_NO,
+		            MEM_ID,
+		            MEM_PWD,
+		            MEM_NAME,
+		            ADDRESS,
+		            ADDRESS_DETAIL,
+		            PHONE,
+		            EMAIL,
+		            BIRTH_DATE,
+		            GENDER
+		        )
+		        VALUES
+		        (
+		            SEQ_MNO.NEXTVAL,
+		            ?,
+		            ?,
+		            ?,
+		            ?,
+		            ?,
+		            ?,
+		            ?,
+		            ?,
+		            ?
+		        )
+	
+	
+	</entry>
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+	<!-- 충원님 -->
+
+	
+	<entry key="updateMember">
+	UPDATE 
+	        MEMBER
+	   SET
+	        MEM_NAME =?, 
+	        ADDRESS = ?,
+	        ADDRESS_DETAIL = ?,
+	        PHONE = ?,
+	        EMAIL = ?
+	 WHERE
+	       MEM_ID = ? AND DROP_YN = 'N'
+	
+	</entry>
+	<entry key="selectMember">
+	SELECT
+	        MEM_NO,
+	        MEM_ID,
+	        MEM_PWD,
+	        MEM_NAME,
+	        ADDRESS,
+	        ADDRESS_DETAIL,
+	        PHONE,
+	        EMAIL,
+	        BIRTH_DATE,
+	        GENDER,
+	        GRADE,
+	        ENROLL_DATE,
+	        STOP_YN,
+	        STOP_DATE,
+	        DROP_YN,
+	        DROP_DATE,
+	        REP_COUNT
+	 FROM
+	        MEMBER
+	WHERE
+	        MEM_ID = ?
+	
+	
+	</entry>
+	<entry key="updatePwd">
+	UPDATE
+	        MEMBER
+	   SET
+	   		MEM_PWD = ?
+	 WHERE
+	        MEM_ID = ? 
+	   AND
+	        MEM_PWD = ?
+	
+	
+	
+	</entry>
+	<entry key="deleteMem">
+	UPDATE
+	        MEMBER
+	   SET
+	        DROP_YN = 'Y'
+	WHERE
+			MEM_ID = ?
+	  AND
+	        MEM_PWD = ?
+		
+	
+	</entry>
+	 
+	
+
+</properties>

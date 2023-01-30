@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	
+	
+	
+	
+	<entry key="msgIdCheck">
+
+		
+		SELECT 
+				COUNT(*)
+		FROM
+				MEMBER
+		WHERE
+				MEM_ID = ?
+	
+
+	</entry>
+
+
+	
+	
+	
+	
+	
+	<entry key="findSenderNo">
+	
+		SELECT
+			    MEM_NO
+		FROM
+        		MEMBER
+		WHERE
+        		MEM_ID = ?
+	
+	</entry>
+
+
+
+
+
+
+	<entry key="insertMessage">
+
+		INSERT
+		    INTO
+		        MESSAGE
+		        (
+		        MSG_NO,
+		        MSG_CONTENT,
+		        MSG_CREATE_DATE,
+		        SENDER,
+		        RECIPIENT
+		        )
+		    VALUES
+		        (
+		        SEQ_MSGNO.NEXTVAL,
+		        ?,
+		        SYSDATE,
+		        ?,
+		        ?
+		        )
+	
+	
+	
+	</entry>
+	
+	
+	
+	
+	
+	
+	
+	<entry key="selectReceiveListCount">
+	
+	
+		SELECT 
+		        COUNT(*)
+		FROM
+		        MESSAGE
+		WHERE
+		        RECIPIENT = ?
+		AND   
+                MSG_CHECK = 'N'        
+		
+			
+	
+	</entry>
+	
+	
+	
+	
+	
+	
+	
+	
+	<entry key="receiveListMessage">
+	
+	
+			SELECT * 
+			    FROM(SELECT ROWNUM RNUM, A.*
+			        FROM(
+			                SELECT
+			                        MSG_NO,
+			                        MEM_ID,
+			                        MSG_CONTENT,
+			                        MSG_CREATE_DATE
+			                FROM
+			                        MESSAGE
+			                JOIN    
+			                        MEMBER
+			                ON
+			                        (MEM_NO = RECIPIENT)
+			                WHERE
+			                        RECIPIENT = ?
+			               	AND   
+                					MSG_CHECK = 'N'  
+			                ORDER
+			                    BY
+			                        MSG_CREATE_DATE DESC) A)
+			    WHERE RNUM BETWEEN ? AND ?
+	
+	
+	
+	</entry>
+
+
+
+
+
+
+	<entry key="receiveDetailViewMessage">
+	
+		SELECT
+		        MSG_CONTENT,
+		        MSG_CREATE_DATE,
+		        MEM_ID
+		FROM
+		        MESSAGE
+		JOIN
+		        MEMBER
+		ON
+		    	(MEM_NO = SENDER)
+		WHERE
+		    	MSG_NO = ?
+			
+	
+	</entry>
+
+
+
+
+
+
+	<entry key="deleteMessage">
+	
+		UPDATE
+        		MESSAGE
+			SET
+    			MSG_CHECK = 'Y'
+		WHERE
+    			MSG_NO = ?
+
+	</entry>
+
+
+
+
+	<entry key="selectSendListCount">
+	
+		SELECT 
+		        COUNT(*)
+		FROM
+		        MESSAGE
+		WHERE
+		        SENDER = ?
+		AND   
+                MSG_CHECK = 'N'        
+
+	
+	</entry>
+	
+	
+	
+	
+	
+	
+	
+	<entry key="sendListMessage">
+	
+		SELECT * 
+			    FROM(SELECT ROWNUM RNUM, A.*
+			        FROM(
+			                SELECT
+			                        MSG_NO,
+			                        MEM_ID,
+			                        MSG_CONTENT,
+			                        MSG_CREATE_DATE
+			                FROM
+			                        MESSAGE
+			                JOIN    
+			                        MEMBER
+			                ON
+			                        (MEM_NO = SENDER)
+			                WHERE
+			                        SENDER = ?
+			               	AND   
+                					MSG_CHECK = 'N'  
+			                ORDER
+			                    BY
+			                        MSG_CREATE_DATE DESC) A)
+			    WHERE RNUM BETWEEN ? AND ?
+
+	
+	
+	</entry>
+	
+	
+	
+
+	<entry key="sendDetailViewMessage">
+		
+		SELECT
+		        MSG_CONTENT,
+		        MSG_CREATE_DATE,
+		        MEM_ID
+		FROM
+		        MESSAGE
+		JOIN
+		        MEMBER
+		ON
+		    	(MEM_NO = RECIPIENT)
+		WHERE
+		    	MSG_NO = ?
+			
+	
+	</entry>
+	
+
+
+</properties>

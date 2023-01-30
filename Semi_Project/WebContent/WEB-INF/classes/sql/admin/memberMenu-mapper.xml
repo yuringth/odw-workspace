@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>admin MemberMenu sql문</comment>
+	
+	
+	<entry key="selectMemberList">
+		SELECT *
+		  FROM(SELECT
+		  		      ROWNUM RNUM,
+		  		      A.*
+		         FROM (SELECT
+			                   MEM_NO,
+			                   MEM_ID,
+			                   MEM_NAME,
+			                   ADDRESS,
+			                   ADDRESS_DETAIL,
+			                   PHONE,
+			                   EMAIL,
+			                   BIRTH_DATE,
+			                   GENDER,
+			                   GRADE,
+			                   ENROLL_DATE,
+			                   STOP_YN,
+			                   STOP_DATE,
+			                   DROP_YN,
+			                   DROP_DATE,
+			                   REP_COUNT
+			              FROM 
+			                   MEMBER
+			             WHERE
+			             	   DROP_YN LIKE ?
+			             ORDER
+			                BY
+			                   MEM_NO DESC) "A")
+		   WHERE
+		         RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectQnaList">
+		SELECT *
+		  FROM(SELECT
+		  		      ROWNUM RNUM,
+		  		      A.*
+		         FROM (SELECT
+			                  QNA_NO,
+			                  QNA_TITLE,
+			                  QNA_CONTENT,
+			                  QNA_CREATE_DATE,
+			                  QNA_CHECK,
+			                  MEM_ID,
+			                  ANSWER_CONTENT
+			             FROM 
+			                  QNA
+			             JOIN
+			              	  MEMBER USING(MEM_NO)
+			            WHERE
+			            	  QNA_CHECK LIKE ?
+			            ORDER
+			               BY
+			                  QNA_NO DESC) "A")
+		   WHERE
+		         RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectReportList">
+		SELECT *
+		  FROM(SELECT
+		  		      ROWNUM RNUM,
+		  		      A.*
+		         FROM (SELECT
+			                  REP_NO,
+			                  REP_REASON,
+			                  REP_CONTENT,
+			                  REP_MEM_ID,
+			                  REPORTED_MEM_ID,
+			                  REP_DATE,
+			                  REP_YN,
+			                  BOARD_CONTENT,
+                              REPLY_CONTENT
+			             FROM 
+			                  REPORT
+                         LEFT JOIN
+                              BOARD USING(BOARD_NO)
+                         LEFT JOIN
+                              REPLY USING(REPLY_NO)
+                        WHERE
+                              REP_YN LIKE ?
+                          AND
+                              ? LIKE '%'
+			            ORDER
+			               BY
+			                  REP_NO DESC) "A")
+		   WHERE
+		         RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectReport">
+		SELECT REP_NO,
+		       REP_REASON,
+		       REP_CONTENT,
+		       REP_MEM_ID,
+		       REPORTED_MEM_ID,
+		       REP_DATE,
+		       REP_YN,
+		       BOARD_CONTENT,
+		       REPLY_CONTENT,
+		       R.BOARD_NO,
+		       R.REPLY_NO,
+		       BOARD_DELETE_STATUS,
+		       REPLY_DELETE_YN
+		  FROM 
+		       REPORT R
+		  LEFT JOIN
+		       BOARD B ON(R.BOARD_NO = B.BOARD_NO)
+		  LEFT JOIN
+		       REPLY P ON(R.REPLY_NO = P.REPLY_NO)
+		 WHERE
+		       REP_NO = ?
+	</entry>
+	
+	<entry key="updateRepYn">
+		UPDATE
+		       REPORT
+		   SET
+		       REP_YN = 'Y'
+		 WHERE
+		       REP_NO = ?
+	</entry>
+	
+	<entry key="updateBoardStatus">
+		UPDATE
+		       BOARD
+		   SET
+		       BOARD_DELETE_STATUS = ?
+		 WHERE
+		       BOARD_NO = ?
+	</entry>
+	
+	<entry key="updateReplyStatus">
+		UPDATE
+		       REPLY
+		   SET
+		       REPLY_DELETE_YN = ?
+		 WHERE
+		       REPLY_NO = ?
+	</entry>
+	
+	<entry key="deleteMemberByMemId">
+		UPDATE
+		       MEMBER
+		   SET
+		       DROP_YN = 'Y',
+		       DROP_DATE = SYSDATE
+		 WHERE
+		       MEM_ID = ?
+	</entry>
+	
+	<entry key="selectQna">
+		SELECT
+		       QNA_NO,
+		       QNA_TITLE,
+		       QNA_CONTENT,
+		       QNA_CREATE_DATE,
+		       QNA_CHECK,
+		       MEM_ID,
+		       ANSWER_CONTENT
+		  FROM 
+		       QNA
+		  JOIN
+		       MEMBER USING(MEM_NO)
+		 WHERE
+		       QNA_NO = ?
+	
+	</entry>
+	
+	<entry key="updateQnaAnswer">
+		UPDATE
+		       QNA
+		   SET
+		       ANSWER_CONTENT = ?,
+		       QNA_CHECK = 'Y'
+		 WHERE
+		       QNA_NO = ?
+	</entry>
+	
+	<entry key="deleteQnaAnswer">
+	
+		UPDATE
+		       QNA
+		   SET
+		       ANSWER_CONTENT = NULL,
+		       QNA_CHECK = 'N'
+		 WHERE
+		       QNA_NO = ?
+	</entry>
+	
+	<entry key="selectMemberListCountByCondition">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       MEMBER 
+	     WHERE
+	           DROP_YN LIKE ?
+	</entry>
+	
+	<entry key="selectMember">
+		SELECT MEM_NO,
+		       MEM_ID,
+		       MEM_PWD,
+		       MEM_NAME,
+		       ADDRESS,
+		       ADDRESS_DETAIL,
+		       PHONE,
+		       EMAIL,
+		       BIRTH_DATE,
+		       GENDER,
+		       GRADE,
+		       ENROLL_DATE,
+		       DROP_YN,
+		       DROP_DATE,
+		       REP_COUNT
+		  FROM
+		       MEMBER
+		 WHERE
+		       MEM_NO = ?
+	            
+	</entry>
+
+	<entry key="updateMemberInfo">
+		UPDATE
+		       MEMBER
+		   SET
+		       BIRTH_DATE = ?,
+		       GRADE = ?,
+		       PHONE = ?,
+		       EMAIL = ?,
+		       ADDRESS = ?,
+		       ADDRESS_DETAIL = ?
+		 WHERE
+		       MEM_NO = ?
+	
+	</entry>
+	
+	<entry key="resetMemPwd">
+		UPDATE
+			   MEMBER
+		   SET
+		       MEM_PWD = '0000'
+		 WHERE
+		       MEM_NO = ?
+	
+	</entry>
+	
+	<entry key="selectQnaListCountByQnaCheck">
+		SELECT
+			   COUNT(*)
+		  FROM 
+		       QNA
+		 WHERE
+		       QNA_CHECK LIKE ?
+	</entry>
+	
+	
+</properties>

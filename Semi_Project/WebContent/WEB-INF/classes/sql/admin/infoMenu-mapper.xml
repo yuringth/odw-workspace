@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>admin InfoMenu sql문</comment>
+	
+	<entry key="selectLocalListCount">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       INFORMATION
+		 WHERE
+		       INFO_TYPE = '지역별산'
+		   AND
+		       INFO_DELETE_YN LIKE ?
+		   AND
+		       LOCAL LIKE ?
+	</entry>
+	
+	<entry key="selectSeasonInfoList">
+		SELECT *
+		  FROM(SELECT
+		  		      ROWNUM RNUM,
+		  		      A.*
+		         FROM (SELECT
+						       INFO_NO,
+						       INFO_TYPE,
+						       TYPE,
+						       MEM_ID,
+						       INFO_TITLE,
+						       INFO_CONTENT,
+						       INFO_MEDIA,
+						       INFO_CREATE_DATE,
+						       INFO_COUNT,
+						       INFO_DELETE_YN,
+						       SEASON,
+						       LOCAL,
+						       TURNAROUND,
+						       COURSE,
+						       TRAFFIC
+						  FROM
+                               INFORMATION
+                          JOIN
+                               MEMBER ON(INFO_WRITER_NO = MEM_NO)
+                         WHERE
+                               INFO_TYPE = '계절별산'
+                           AND
+						       SEASON LIKE ?
+						   AND
+						       INFO_DELETE_YN LIKE ?
+			             ORDER
+			                BY
+			                   INFO_NO DESC) "A")
+		   WHERE
+		         RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="insertLocalInfo">
+		INSERT
+		       INTO
+		            INFORMATION
+		            (
+		            INFO_NO,
+		            INFO_TYPE,
+		            TYPE,
+		            INFO_WRITER_NO,
+		            INFO_TITLE,
+		            INFO_CREATE_DATE,
+		            INFO_COUNT,
+		            INFO_DELETE_YN,
+		            LOCAL,
+		            TURNAROUND,
+		            COURSE,
+		            TRAFFIC)
+		     VALUES
+		            (
+		            SEQ_INFO.NEXTVAL,
+		            '지역별산',
+		            DEFAULT,
+		            ?,
+		            ?,
+		            SYSDATE,
+		            DEFAULT,
+		            DEFAULT,
+		            ?,
+		            ?,
+		            ?,
+		            ?
+		            )
+	</entry>
+	
+	<entry key="insertAttachment">
+		INSERT
+		       INTO
+		            ATTACHMENT
+		            (
+		            FILE_NO,
+		            ORIGIN_NAME,
+		            CHANGE_NAME,
+		            FILE_PATH,
+		            INFO_NO
+		            )
+		     VALUES
+		            (
+		            SEQ_FNO.NEXTVAL,
+		            ?,
+		            ?,
+		            ?,
+		            SEQ_INFO.CURRVAL
+		            )
+	</entry>
+	
+	<entry key="insertNewAttachment">
+		INSERT
+		       INTO
+		            ATTACHMENT
+		            (
+		            FILE_NO,
+		            ORIGIN_NAME,
+		            CHANGE_NAME,
+		            FILE_PATH,
+		            INFO_NO
+		            )
+		     VALUES
+		            (
+		            SEQ_FNO.NEXTVAL,
+		            ?,
+		            ?,
+		            ?,
+		            ?
+		            )
+	</entry>
+
+	<entry key="selectInformation">
+		SELECT
+		       INFO_NO,
+		       INFO_TYPE,
+		       TYPE,
+		       MEM_ID,
+		       INFO_TITLE,
+		       INFO_CONTENT,
+		       INFO_CREATE_DATE,
+		       INFO_COUNT,
+		       INFO_DELETE_YN,
+		       SEASON,
+		       LOCAL,
+		       TURNAROUND,
+		       COURSE,
+		       TRAFFIC
+		  FROM
+		       INFORMATION
+		  JOIN
+		       MEMBER ON(INFO_WRITER_NO = MEM_NO)
+		 WHERE
+		       INFO_NO = ?
+	</entry>
+	
+	<entry key="selectAttachment">
+		SELECT
+		       FILE_NO,
+		       ORIGIN_NAME,
+		       CHANGE_NAME,
+		       FILE_PATH,
+		       CREATE_DATE,
+		       STATUS,
+		       INFO_NO
+		  FROM
+		       ATTACHMENT
+		 WHERE
+		       INFO_NO = ?
+	</entry>
+	
+	<entry key="updateLocalInfo">
+		UPDATE
+		       INFORMATION
+		   SET
+		       INFO_TITLE = ?,
+		       LOCAL = ?,
+		       TURNAROUND = ?,
+		       COURSE = ?,
+		       TRAFFIC = ?
+		 WHERE
+		       INFO_NO = ?
+	</entry>
+	
+	<entry key="updateAttachment">
+		UPDATE
+		       ATTACHMENT
+		   SET
+		       ORIGIN_NAME = ?,
+		       CHANGE_NAME = ?,
+		       FILE_PATH = ?
+		 WHERE
+		       INFO_NO = ?
+	</entry>
+	
+	<entry key="insertBeginnerInfo">
+		INSERT
+		       INTO
+		            INFORMATION
+		            (
+		            INFO_NO,
+		            INFO_TYPE,
+		            TYPE,
+		            INFO_WRITER_NO,
+		            INFO_TITLE,
+		            INFO_CREATE_DATE,
+		            INFO_COUNT,
+		            INFO_DELETE_YN
+		            )
+		     VALUES
+		            (
+		            SEQ_INFO.NEXTVAL,
+		            '초보자길잡이',
+		            DEFAULT,
+		            ?,
+		            ?,
+		            SYSDATE,
+		            DEFAULT,
+		            DEFAULT
+		            )
+	</entry>
+	
+	<entry key="updateBeginnerInfo">
+		UPDATE
+		       INFORMATION
+		   SET
+		       INFO_TITLE = ?
+		 WHERE
+		       INFO_NO = ?
+	</entry>
+	
+	<entry key="insertSeasonInfo">
+		INSERT
+		       INTO
+		            INFORMATION
+		            (
+		            INFO_NO,
+		            INFO_TYPE,
+		            TYPE,
+		            INFO_WRITER_NO,
+		            INFO_TITLE,
+		            SEASON,
+		            INFO_CREATE_DATE,
+		            INFO_COUNT,
+		            INFO_DELETE_YN
+		            )
+		     VALUES
+		            (
+		            SEQ_INFO.NEXTVAL,
+		            '계절별산',
+		            DEFAULT,
+		            ?,
+		            ?,
+		            ?,
+		            SYSDATE,
+		            DEFAULT,
+		            DEFAULT
+		            )
+	</entry>
+	
+	<entry key="updateSeasonInfo">
+		UPDATE
+		       INFORMATION
+		   SET
+		       INFO_TITLE = ?,
+		       SEASON = ?
+		 WHERE
+		       INFO_NO = ?
+	</entry>
+	
+	<entry key="deleteInfoList">
+		UPDATE
+		       INFORMATION
+		   SET
+		       INFO_DELETE_YN = 'Y'
+		 WHERE
+		       INFO_NO = ?
+	</entry>
+	
+	<entry key="deleteInfo">
+		UPDATE
+		       INFORMATION
+		   SET
+		       INFO_DELETE_YN = 
+		  CASE
+		       WHEN
+		            INFO_DELETE_YN = 'Y'
+		       THEN
+		            'N'
+			   ELSE
+			        'Y'
+			    END
+		 WHERE
+		       INFO_NO = ?
+	</entry>
+	
+	<entry key="selectBeginnerListCount">
+		SELECT
+			   COUNT(*)
+		  FROM
+		       INFORMATION
+		 WHERE
+		       INFO_TYPE = '초보자길잡이'
+		   AND
+		       INFO_DELETE_YN LIKE ?
+	</entry>
+	
+	<entry key="selectBeginnerInfoList">
+		SELECT *
+		  FROM(SELECT
+		  		      ROWNUM RNUM,
+		  		      A.*
+		         FROM (SELECT
+						       INFO_NO,
+						       INFO_TYPE,
+						       TYPE,
+						       MEM_ID,
+						       INFO_TITLE,
+						       INFO_CONTENT,
+						       INFO_MEDIA,
+						       INFO_CREATE_DATE,
+						       INFO_COUNT,
+						       INFO_DELETE_YN,
+						       SEASON,
+						       LOCAL,
+						       TURNAROUND,
+						       COURSE,
+						       TRAFFIC
+						  FROM
+                               INFORMATION
+                          JOIN
+                               MEMBER ON(INFO_WRITER_NO = MEM_NO)
+                         WHERE
+                               INFO_TYPE = '초보자길잡이'
+                           AND
+                               INFO_DELETE_YN LIKE ?
+			             ORDER
+			                BY
+			                   INFO_NO DESC) "A")
+		   WHERE
+		         RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectSeasonListCount">
+		SELECT 
+		       COUNT(*)
+		  FROM
+		       INFORMATION
+		 WHERE
+		       SEASON LIKE ?
+		   AND
+		       INFO_DELETE_YN LIKE ?
+		   AND
+		       INFO_TYPE = '계절별산'
+	
+	
+	</entry>
+	
+	<entry key="selectLocalInfoList">
+		SELECT *
+			  FROM(SELECT
+			  		      ROWNUM RNUM,
+			  		      A.*
+			         FROM (SELECT
+							       INFO_NO,
+							       INFO_TYPE,
+							       TYPE,
+							       MEM_ID,
+							       INFO_TITLE,
+							       INFO_CONTENT,
+							       INFO_MEDIA,
+							       INFO_CREATE_DATE,
+							       INFO_COUNT,
+							       INFO_DELETE_YN,
+							       SEASON,
+							       LOCAL,
+							       TURNAROUND,
+							       COURSE,
+							       TRAFFIC
+							  FROM
+	                               INFORMATION
+	                          JOIN
+	                               MEMBER ON(INFO_WRITER_NO = MEM_NO)
+	                         WHERE
+	                               INFO_TYPE = '지역별산'
+	                           AND
+	                               INFO_DELETE_YN LIKE ?
+	                           AND
+	                           	   LOCAL LIKE ?
+				             ORDER
+				                BY
+				                   INFO_NO DESC) "A")
+			   WHERE
+			         RNUM BETWEEN ? AND ?
+	</entry>
+</properties>

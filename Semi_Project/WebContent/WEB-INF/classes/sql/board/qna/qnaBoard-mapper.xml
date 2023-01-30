@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="selectQNAList">
+		SELECT
+			   BOARD_NO,
+		       BOARD_TITLE,
+		       BOARD_ANSWER_YN,
+		       BOARD_CONTENT,
+		       MEM_ID,
+		       BOARD_COUNT,
+		       GRADE
+		  FROM
+		       BOARD
+		  JOIN
+		       MEMBER USING(MEM_NO)
+		 WHERE 
+		       BOARD_DELETE_STATUS = 'N'
+		   AND
+		       BOARD_NAME = 'QNA게시판'
+		 ORDER
+		    BY
+		       CREATE_DATE DESC
+	</entry>
+
+	<entry key="insertQNABoard">
+		INSERT
+		  INTO
+		  	    BOARD
+		  	   (
+		  	    BOARD_NO,
+		  	    BOARD_NAME,
+		  	    BOARD_TITLE,
+		  	    BOARD_CONTENT,
+		  	    MEM_NO
+		  	   )
+		VALUES 	
+			   (
+			   SEQ_BNO.NEXTVAL,
+			   'QNA게시판',
+			   	?,
+				?,
+				?
+			   )
+	 </entry>
+	 
+	 <entry key="increaseCount">
+	 	UPDATE
+	 		   BOARD
+	 	   SET
+	 	  	   BOARD_COUNT = BOARD_COUNT + 1
+	 	 WHERE
+	 	 	   BOARD_NO = ?
+	 	   AND
+	 	   	   BOARD_DELETE_STATUS = 'N'
+	 
+	 </entry>
+	 
+	 <entry key="selectQNABoard">
+	 	SELECT
+		       BOARD_NO,
+		       BOARD_TITLE,
+		       MEM_ID,
+		       BOARD_CONTENT,
+		       BOARD_COUNT,
+		       CREATE_DATE,
+		       BOARD_ANSWER_YN,
+		       GRADE,
+		       GENDER
+		  FROM
+		       BOARD
+		  JOIN
+		       MEMBER USING(MEM_NO)
+		 WHERE 
+		       BOARD_NO = ?
+		   AND
+		       BOARD_DELETE_STATUS = 'N'
+
+	 </entry>
+	 
+	 <entry key="updateQNABoard">
+	 	UPDATE
+	 		   BOARD
+	 	   SET
+	 	   	   BOARD_TITLE = ?,
+	 	   	   BOARD_CONTENT = ?
+	 	 WHERE
+	 	 	   BOARD_NO = ? 
+	 	   AND
+	 	   	   BOARD_DELETE_STATUS = 'N'  	   
+	 </entry>
+	 
+	 <entry key="deleteQNAboard">
+	 	UPDATE
+	 		   BOARD
+	 	   SET
+	 	   	   BOARD_DELETE_STATUS = 'Y'
+	 	 WHERE 
+	 	 	   BOARD_NO = ?
+	 	   AND
+	 	   	   BOARD_DELETE_STATUS = 'N'	    	   
+	
+	 </entry>
+	 
+	 <entry key="qnaAnswerNSelect">
+		SELECT
+			   BOARD_NO,
+		       BOARD_TITLE,
+		       BOARD_ANSWER_YN,
+		       BOARD_CONTENT,
+		       MEM_ID,
+		       BOARD_COUNT,
+		       GRADE
+		  FROM
+		       BOARD
+		  JOIN
+		       MEMBER USING(MEM_NO)
+		 WHERE 
+		       BOARD_DELETE_STATUS = 'N'
+		   AND
+		       BOARD_NAME = 'QNA게시판'
+		   AND
+		   	   BOARD_ANSWER_YN = 'N'
+		  
+		 ORDER
+		    BY
+		       CREATE_DATE DESC
+	</entry>
+
+
+	<entry key="selectQNABoardReplyList">
+	SELECT 
+	        REPLY_NO,
+	        REPLY_CONTENT,
+	        MEM_ID,
+	        REPLY_CREATE_DATE
+	  FROM
+	        REPLY R
+      LEFT
+	  JOIN   
+	  		BOARD B ON (R.BOARD_NO = B.BOARD_NO)
+      LEFT
+	  JOIN
+	        MEMBER M ON (R.MEM_NO = M.MEM_NO)
+	 WHERE 
+	        R.BOARD_NO = ?
+	   AND
+	        REPLY_DELETE_YN = 'N'
+	   AND
+	   		BOARD_NAME = 'QNA게시판'     
+	 ORDER
+	    BY
+	        REPLY_CREATE_DATE DESC
+	</entry>
+
+
+
+	<entry key="insertQNABoardReply">
+	INSERT
+	  INTO
+	        REPLY
+	        (
+	        REPLY_NO,
+	        REPLY_CONTENT,
+	        BOARD_NO,
+	        MEM_NO
+	        )
+	VALUES
+	        (
+	        SEQ_RNO.NEXTVAL,
+	        ?,
+	        ?,
+	        ?
+	        )
+
+	</entry>
+	
+	<entry key="countReplyList">
+		SELECT
+				REPLY_NO,
+				BOARD_NO
+		  FROM
+		  		REPLY
+	</entry>
+	
+
+</properties>

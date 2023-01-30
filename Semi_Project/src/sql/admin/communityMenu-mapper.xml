@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>admin CommunityMenu sql문</comment>
+	
+	<entry key="selectNoticeListCount">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       NOTICE
+		 WHERE
+		       DELETE_YN LIKE ?
+		   AND
+		       BOARD_NAME LIKE ?
+	</entry>
+	
+	<entry key="insertNotice">
+		INSERT
+		       INTO
+		            NOTICE
+		            (
+		            NOTICE_NO,
+		            NOTICE_TITLE,
+		            NOTICE_CONTENT,
+		            BOARD_NAME,
+		            MEM_NO,
+		            DELETE_YN)
+		     VALUES
+		            (
+		            SEQ_NNO.NEXTVAL,
+		            ?,
+		            ?,
+		            ?,
+		            ?,
+		            DEFAULT
+		            )
+	</entry>
+	
+	<entry key="insertAttachment">
+		INSERT
+		       INTO
+		            ATTACHMENT
+		            (
+		            FILE_NO,
+		            ORIGIN_NAME,
+		            CHANGE_NAME,
+		            FILE_PATH,
+		            NOTICE_NO
+		            )
+		     VALUES
+		            (
+		            SEQ_FNO.NEXTVAL,
+		            ?,
+		            ?,
+		            ?,
+		            SEQ_NNO.CURRVAL
+		            )
+	</entry>
+	
+	<entry key="insertNewAttachment">
+		INSERT
+		       INTO
+		            ATTACHMENT
+		            (
+		            FILE_NO,
+		            ORIGIN_NAME,
+		            CHANGE_NAME,
+		            FILE_PATH,
+		            NOTICE_NO
+		            )
+		     VALUES
+		            (
+		            SEQ_FNO.NEXTVAL,
+		            ?,
+		            ?,
+		            ?,
+		            ?
+		            )
+	</entry>
+	
+	<entry key="selectNoticeList">
+		SELECT *
+		  FROM(SELECT
+		  		      ROWNUM RNUM,
+		  		      A.*
+		         FROM (SELECT
+						       NOTICE_NO,
+						       NOTICE_TITLE,
+						       NOTICE_CONTENT,
+						       BOARD_NAME,
+						       MEM_ID,
+						       NOTICE_COUNT,
+						       NOTICE_CREATE_DATE,
+						       DELETE_YN
+						  FROM
+                               NOTICE
+                          JOIN
+                               MEMBER USING(MEM_NO)
+                         WHERE
+                               DELETE_YN LIKE ?
+                           AND
+                               BOARD_NAME LIKE ?
+			             ORDER
+			                BY
+			                   NOTICE_NO DESC) "A")
+		   WHERE
+		         RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectNotice">
+		SELECT
+		       NOTICE_NO,
+		       NOTICE_TITLE,
+		       NOTICE_CONTENT,
+		       BOARD_NAME,
+		       MEM_NO,
+		       MEM_ID,
+		       NOTICE_COUNT,
+		       NOTICE_CREATE_DATE,
+		       DELETE_YN
+		  FROM
+		       NOTICE
+		  JOIN
+		       MEMBER USING(MEM_NO)
+		 WHERE
+		       NOTICE_NO = ?
+	</entry>
+	
+	<entry key="selectAttachment">
+		SELECT
+		       FILE_NO,
+		       ORIGIN_NAME,
+		       CHANGE_NAME,
+		       FILE_PATH,
+		       CREATE_DATE,
+		       STATUS,
+		       NOTICE_NO
+		  FROM
+		       ATTACHMENT
+		 WHERE
+		       NOTICE_NO = ?
+	</entry>
+	
+	<entry key="updateNotice">
+		UPDATE
+		       NOTICE
+		   SET
+		       NOTICE_TITLE = ?,
+		       NOTICE_CONTENT = ?,
+		       BOARD_NAME=?
+		 WHERE
+		       NOTICE_NO = ?
+	</entry>
+	
+	<entry key="updateAttachment">
+		UPDATE
+		       ATTACHMENT
+		   SET
+		       ORIGIN_NAME = ?,
+		       CHANGE_NAME = ?
+		 WHERE
+		       NOTICE_NO = ?
+	</entry>
+	
+	<entry key="deleteNoticeList">
+		UPDATE
+		       NOTICE
+		   SET
+		       DELETE_YN = 'Y'
+		 WHERE
+		       NOTICE_NO = ?
+	</entry>
+	
+	<entry key="updateNoticeYn">
+		UPDATE
+		       NOTICE
+		   SET
+		       DELETE_YN = 
+						   CASE
+						        WHEN
+						             DELETE_YN = 'Y'
+						        THEN
+						             'N'
+							    ELSE
+							         'Y'
+						    END
+	 	 WHERE
+		       NOTICE_NO = ?
+	</entry>
+	
+</properties>

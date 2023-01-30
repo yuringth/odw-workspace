@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<entry key="selectReviewBoardListCount">
+	SELECT 
+        	COUNT(*)
+  	  FROM
+        	BOARD
+ 	 WHERE
+        	BOARD_DELETE_STATUS ='N'
+   	   AND
+        	BOARD_NAME = '리뷰게시판'
+	</entry>
+
+	<entry key="selectReviewBoardList">
+	SELECT *
+	FROM (SELECT 
+  	  			   ROWNUM RNUM, 
+  	  			   A.* 
+  	FROM (SELECT  			   
+			       BOARD_NO,
+			       BOARD_CATEGORY,
+			       FILE_NO,
+			       BOARD_TITLE,
+			       BOARD_CONTENT,
+			       MEM_ID,
+			       BOARD_COUNT,
+			       BOARD_ANSWER_YN,
+                   B.CREATE_DATE,
+			       FILE_PATH||CHANGE_NAME TITLEIMG
+			  FROM
+			       BOARD B
+              LEFT    
+              JOIN
+			       ATTACHMENT USING(BOARD_NO)
+			  JOIN
+		           MEMBER USING(MEM_NO)
+			 WHERE
+			       B.BOARD_NAME = '리뷰게시판'
+			   AND
+			       BOARD_DELETE_STATUS = 'N'
+			 ORDER
+           	    BY
+             	   B.CREATE_DATE DESC) A)
+            WHERE
+				   RNUM BETWEEN ? AND ?
+	
+	</entry>
+
+
+	<entry key="insertReviewBoard">
+	INSERT
+	  INTO
+	  		BOARD
+	  		(
+	  		BOARD_NO,
+	  		BOARD_NAME,
+	  		BOARD_TITLE,
+	  		BOARD_CONTENT,
+	  		BOARD_CATEGORY,
+	  		MEM_NO
+	  		)
+	VALUES
+			(
+			SEQ_BNO.NEXTVAL,
+			'리뷰게시판',
+			?,
+			?,
+			'카테고리자리',
+			?
+			)
+	</entry>
+	
+	<entry key="insertReviewAttachment">
+	 INSERT
+       INTO
+             ATTACHMENT
+              (
+              FILE_NO,
+              BOARD_NO,
+              ORIGIN_NAME,
+              CHANGE_NAME,
+              FILE_PATH
+              )
+      VALUES
+              (
+              SEQ_FNO.NEXTVAL,
+              SEQ_BNO.CURRVAL,
+              ?,
+              ?,
+              ?
+              )   
+	</entry>
+	
+	<entry key="increaseCount">
+	 	UPDATE
+	 		   BOARD
+	 	   SET
+	 	  	   BOARD_COUNT = BOARD_COUNT + 1
+	 	 WHERE
+	 	 	   BOARD_NO = ?
+	 	   AND
+	 	   	   BOARD_DELETE_STATUS = 'N'
+	 
+	 </entry>
+	
+	<entry key="selectReviewBoardDetail">
+		SELECT
+		       BOARD_NO,
+		       BOARD_TITLE,
+		       BOARD_CONTENT,
+		       CREATE_DATE,
+		       BOARD_COUNT,
+		       MEM_ID,
+		       GENDER,
+		       GRADE
+		  FROM
+		       BOARD
+		  JOIN
+		       MEMBER USING(MEM_NO)
+		 WHERE
+		       BOARD_NO = ?
+		   AND
+		       BOARD_DELETE_STATUS = 'N' 
+	       
+	</entry>
+	
+	<entry key="selectReviewBoardDetailAttachment">
+		SELECT 
+		       FILE_NO,
+		       ORIGIN_NAME,
+		       CHANGE_NAME,
+		       FILE_PATH||CHANGE_NAME TITLEIMG
+		  FROM
+		       ATTACHMENT
+		  JOIN
+		       BOARD USING(BOARD_NO)
+		 WHERE
+		       BOARD_NO = ?
+
+	</entry>
+	
+	<entry key="selectReviewBoardReplyList">
+		SELECT
+		        REPLY_NO,
+		        REPLY_CONTENT,
+		        MEM_ID,
+		        REPLY_CREATE_DATE
+		  FROM
+		        REPLY R
+		  LEFT
+		  JOIN   
+		        BOARD B ON (R.BOARD_NO = B.BOARD_NO)
+		  LEFT
+		  JOIN
+		        MEMBER M ON (R.MEM_NO = M.MEM_NO)
+		 WHERE 
+		        R.BOARD_NO = ?
+		   AND
+		        REPLY_DELETE_YN = 'N'
+		   AND
+		        BOARD_NAME = '리뷰게시판'     
+		 ORDER
+		    BY
+		        REPLY_CREATE_DATE DESC
+	
+	</entry>
+	
+	<entry key="insertReplyBoardReply">
+		INSERT
+	  	  INTO
+		        REPLY
+		        (
+		        REPLY_NO,
+		        REPLY_CONTENT,
+		        BOARD_NO,
+		        MEM_NO
+		        )
+		VALUES
+		       (
+		       SEQ_RNO.NEXTVAL,
+		        ?,
+		        ?,
+		        ?
+		        )
+
+	</entry>
+	
+	
+	<entry key="updateReviewBoard">
+		UPDATE 
+		       BOARD
+	       SET 
+	       	   BOARD_TITLE = ?,
+	           BOARD_CONTENT = ?
+	     WHERE  
+	           BOARD_NO = ?
+	</entry>
+	
+	<entry key="updateReviewBoardAttachment">
+		
+		UPDATE
+			   ATTACHMENT
+		   SET
+		   	   FILE_PATH = ?,
+		   	   ORIGIN_NAME = ?,
+		   	   CHANGE_NAME = ?
+		 WHERE
+		 	   FILE_NO =?
+
+	</entry>
+	
+	<entry key="deleteReviewBoard">
+	 	UPDATE
+	 		   BOARD
+	 	   SET
+	 	   	   BOARD_DELETE_STATUS = 'Y'
+	 	 WHERE 
+	 	 	   BOARD_NO = ?
+	 	   AND
+	 	   	   BOARD_DELETE_STATUS = 'N'	    	   
+	
+	 </entry>
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 <entry key="selectReviewBoardPreview">
+			
+		SELECT * 
+		        FROM(SELECT ROWNUM RNUM, A.*
+		            FROM(
+		                SELECT 
+		                        FILE_PATH||CHANGE_NAME TITLEIMG,
+		                        BOARD_TITLE,
+		                        BOARD_CONTENT,
+		                        MEM_ID,
+		                        BOARD_COUNT
+		                FROM
+		                        BOARD B
+		                JOIN
+		                        MEMBER
+		                USING
+		                        (MEM_NO)
+		                JOIN
+		                        ATTACHMENT AT
+		                ON
+		                        (B.BOARD_NO = AT.BOARD_NO)
+		                WHERE
+		                        B.BOARD_NAME = '리뷰게시판'
+		                AND 
+		                        BOARD_DELETE_STATUS = 'N'
+		                ORDER 
+		                    BY 
+		                        B.CREATE_DATE DESC) A)
+		WHERE RNUM BETWEEN 1 AND 4
+	
+			
+	</entry>
+	
+	
+	
+	
+	
+</properties>

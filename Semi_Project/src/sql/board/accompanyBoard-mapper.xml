@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>accompanyboard sql문</comment>
+	
+	<entry key="selectAccompanyBoardList">
+		SELECT
+				BOARD_NO,
+				MEM_ID,
+				B.BOARD_NAME,
+				BOARD_TITLE,
+				BOARD_CONTENT,
+				FILE_PATH||CHANGE_NAME THUMBNAIL,
+				BOARD_COUNT,
+				MEMBER_NOW,
+				MEMBER_COUNT,
+				DP_DATE,
+				KEYWORD,
+				GRADE
+		  FROM
+		  		BOARD B
+		  LEFT
+		  JOIN
+		  		ATTACHMENT USING (BOARD_NO)
+		  JOIN
+		  		MEMBER  USING (MEM_NO)
+		  WHERE BOARD_DELETE_STATUS = 'N'
+		    AND B.BOARD_NAME = '동행게시판'
+	</entry>
+
+	<entry key="selectAccompanyBoard">
+		SELECT
+				B.BOARD_NO,
+				MEM_ID,
+				B.BOARD_NAME,
+				BOARD_TITLE,
+				BOARD_CONTENT,
+				FILE_PATH||CHANGE_NAME THUMBNAIL,
+				BOARD_COUNT,
+				MEMBER_NOW,
+				MEMBER_COUNT,
+				DP_DATE,
+				KEYWORD,
+				GENDER,
+				B.CREATE_DATE,
+				GRADE,
+				BIRTH_DATE,
+				B.MEM_NO
+		  FROM
+		  		BOARD B
+		  LEFT
+		  JOIN
+		  		ATTACHMENT A ON (B.BOARD_NO = A.BOARD_NO)
+		  JOIN
+		  		MEMBER M ON (B.MEM_NO = M.MEM_NO)
+		  WHERE BOARD_DELETE_STATUS = 'N'
+		    AND B.BOARD_NAME = '동행게시판'
+		    AND B.BOARD_NO = ?
+	</entry>
+	
+	<entry key="selectYAccompanyBoard">
+		SELECT
+				BOARD_NO,
+				MEM_ID,
+				B.BOARD_NAME,
+				BOARD_TITLE,
+				BOARD_CONTENT,
+				FILE_PATH||CHANGE_NAME THUMBNAIL,
+				BOARD_COUNT,
+				MEMBER_NOW,
+				MEMBER_COUNT,
+				DP_DATE,
+				KEYWORD,
+				GRADE
+		  FROM
+		  		BOARD B
+		  LEFT
+		  JOIN
+		  		ATTACHMENT USING (BOARD_NO)
+		  JOIN
+		  		MEMBER USING (MEM_NO)
+		  		
+		  WHERE BOARD_DELETE_STATUS = 'N'
+		    AND B.BOARD_NAME = '동행게시판'
+		    AND MEMBER_COUNT > MEMBER_NOW
+	</entry>
+
+	<entry key="accompanyBoardIncreaseCount">
+	
+		UPDATE
+				BOARD
+		   SET
+		   		BOARD_COUNT = BOARD_COUNT + 1
+		 WHERE
+				BOARD_NO = ?
+		   AND	
+		   		BOARD_DELETE_STATUS = 'N'
+	</entry>
+	
+	<entry key="selectReplyList">
+		SELECT
+				MEM_ID,
+				REPLY_NO,
+				REPLY_CREATE_DATE,
+				REPLY_CONTENT,
+				GRADE
+		  FROM
+		  		REPLY
+		  JOIN
+		  		MEMBER USING (MEM_NO)
+		  WHERE
+		  		BOARD_NO = ?
+		   AND
+		   		REPLY_DELETE_YN = 'N'
+	</entry>
+	
+	<entry key="insertAccompanyBoard">
+		INSERT
+		  INTO
+		        BOARD
+		        (
+		        MEMBER_COUNT,
+		        DP_DATE,
+		        BOARD_TITLE,
+		        BOARD_CONTENT,
+		        KEYWORD,
+		        MEM_NO,
+		        BOARD_NAME,
+		        BOARD_NO
+		        )
+		 VALUES
+		        (
+		        ?,
+		        ?,
+		        ?,
+		        ?,
+		        ?,
+		        ?,
+		        ?,
+		        SEQ_BNO.NEXTVAL
+		        )
+	</entry>
+	
+	<entry key="insertAccompanyAttachment">
+		INSERT
+		  INTO
+		  		ATTACHMENT
+		  		(
+		  		FILE_NO,
+		  		ORIGIN_NAME,
+		  		CHANGE_NAME,
+		  		FILE_PATH,
+		  		BOARD_NO
+		  		)
+		VALUES
+				(
+				SEQ_FNO.NEXTVAL,
+				?,
+				?,
+				?,
+				SEQ_BNO.CURRVAL
+				)
+		  		
+	</entry>
+	
+	<entry key="insertAccompanyBoardReply">
+		INSERT
+		  INTO
+		  		REPLY
+		  		(
+		  		REPLY_NO,
+		  		BOARD_NO,
+		  		MEM_NO,
+		  		REPLY_CONTENT
+		  		)
+		VALUES
+				(
+		  		SEQ_RNO.NEXTVAL,
+		  		?,
+		  		?,
+		  		?
+		  		)
+	</entry>
+	
+	<entry key="deleteAccompanyBoardReply">
+		UPDATE
+				REPLY
+		   SET
+		   		REPLY_DELETE_YN = 'Y'
+		 WHERE
+		 		REPLY_NO = ?
+		 		
+	</entry>
+	
+	<entry key="updateAccompanyBoardReply">
+		UPDATE
+		  		REPLY
+		   SET
+		   		REPLY_CONTENT = ?
+		 WHERE
+		 		REPLY_NO = ?
+	</entry>
+
+	<entry key="accompanyAddMemberNow">
+		UPDATE
+		  		BOARD
+		   SET
+		   		MEMBER_NOW = MEMBER_NOW + 1
+		 WHERE
+		 		BOARD_NO = ?
+	</entry>
+	
+	<entry key="accompanyUpdateMemberNow">
+		UPDATE
+		  		BOARD
+		   SET
+		   		MEMBER_NOW = MEMBER_NOW - 1
+		 WHERE
+		 		BOARD_NO = ?
+	</entry>
+	
+	<entry key="accompanyAddInsertAccept">
+		INSERT
+		  INTO
+		  		ACCEPT
+		  		(
+		  		MEM_NO,
+		  		BOARD_NO
+		  		)
+		VALUES
+				(
+		  		?,
+		  		?
+		  		)
+	</entry>
+	
+	<entry key="accompanyAddDeleteAccept">
+		DELETE
+		  FROM
+		  		ACCEPT
+		 WHERE
+		  		MEM_NO = ?
+		   AND	
+		   		BOARD_NO = ?
+	</entry>
+	
+	<entry key="SelectAccompanyAddButton">
+		SELECT
+				COUNT(*)
+		  FROM 
+		  		ACCEPT
+		 WHERE
+		 		MEM_NO = ?
+		   AND
+		   		BOARD_NO = ?
+	
+
+	</entry>
+	
+	<entry key="selectAccompanyBoardAccept">
+		SELECT
+				MEM_NO
+		  FROM 
+		  		ACCEPT
+		 WHERE
+		 		BOARD_NO = ?
+	</entry>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<entry key="selectAccompanyBoardPreview">
+			
+		SELECT * 
+		        FROM(SELECT ROWNUM RNUM, A.*
+		            FROM(
+		                SELECT 
+		                        FILE_PATH||CHANGE_NAME TITLEIMG,
+		                        BOARD_TITLE,
+		                        BOARD_CONTENT,
+		                        MEM_ID,
+		                        BOARD_COUNT
+		                FROM
+		                        BOARD B
+		                JOIN
+		                        MEMBER
+		                USING
+		                        (MEM_NO)
+		                JOIN
+		                        ATTACHMENT AT
+		                ON
+		                        (B.BOARD_NO = AT.BOARD_NO)
+		                WHERE
+		                        B.BOARD_NAME = '동행게시판'
+		                AND 
+		                        BOARD_DELETE_STATUS = 'N'
+		                ORDER 
+		                    BY 
+		                        B.CREATE_DATE DESC) A)
+		WHERE RNUM BETWEEN 1 AND 4
+	
+			
+	</entry>
+	
+</properties>

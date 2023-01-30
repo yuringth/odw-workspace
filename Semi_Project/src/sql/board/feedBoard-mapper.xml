@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<!-- 피드 게시판 글 작성SQL -->
+	<entry key="insertFeedBoard">
+		INSERT
+		  INTO
+		      BOARD
+		      (
+		      BOARD_NO,
+		      MEM_NO,
+		      BOARD_NAME,
+		      BOARD_CONTENT,
+		      KEYWORD
+		      )
+		VALUES
+		      (
+		      SEQ_BNO.NEXTVAL,
+		      ?,
+		      '피드게시판',
+		      ?,
+		      ?
+		      )
+	</entry>
+
+	<!-- 피드 게시판 글 작성(사진첨부) SQL -->	
+	<entry key="insertFeedAttachment">
+		INSERT
+		  INTO
+		       ATTACHMENT
+		       (
+		       FILE_NO,
+		       BOARD_NO,
+		       ORIGIN_NAME,
+		       CHANGE_NAME,
+		       FILE_PATH
+		       )
+		VALUES
+		       (
+		       SEQ_FNO.NEXTVAL,
+		       SEQ_BNO.CURRVAL,
+		       ?,
+		       ?,
+		       ?
+		       )
+	</entry>
+	
+ 	<entry key="selectFeedBoard">
+	 SELECT
+	 		  BOARD_NO,
+	 		  FILE_NO,
+		      MEM_ID,
+		      BOARD_CONTENT,
+		      LIKE_COUNT,
+		      FILE_PATH||CHANGE_NAME TITLEIMG,
+		      B.CREATE_DATE
+		FROM
+		      BOARD B
+		JOIN 
+		      ATTACHMENT USING(BOARD_NO)
+		JOIN 
+		      MEMBER USING(MEM_NO)
+		WHERE
+		      B.BOARD_NAME = '피드게시판'
+		AND
+		      BOARD_DELETE_STATUS = 'N'      
+		ORDER
+		   BY
+		      BOARD_NO DESC
+      </entry>	
+	
+	
+	
+	<entry key="detailFeedBoard">
+		SELECT
+		       BOARD_NO, 
+		       MEM_ID,
+		       BOARD_CONTENT,
+		       KEYWORD,
+		       <!-- 좋아요기능때문에 LIKE_COUNT 컬럼 추가함(SQL문재사용) -->
+		       LIKE_COUNT,
+		       <!-- 댓글작성 기능때문에 MEM_NO 컬럼 추가함 -->
+		       MEM_NO
+		  FROM
+		       BOARD
+		  JOIN 
+		       MEMBER USING(MEM_NO)
+		  WHERE
+               BOARD_NO = ?
+           AND 
+               BOARD_NAME = '피드게시판'
+           AND
+               BOARD_DELETE_STATUS = 'N'
+	</entry>
+	
+	
+	<entry key="detailFeedAttachment">
+		SELECT
+		       FILE_NO,
+		       ORIGIN_NAME,
+		       FILE_PATH||CHANGE_NAME TITLEIMG
+		FROM
+		       ATTACHMENT
+		JOIN 
+		       BOARD USING(BOARD_NO)
+		WHERE
+		       BOARD_NO = ?
+	</entry>
+	
+	
+	
+	<!-- 댓글 삭제하려고 식별자가져올건데, 오류뜨면 삭제하기 -->
+	<entry key="detailFeedReply">
+			SELECT
+			       REPLY_NO,
+	               REPLY_CONTENT
+			  FROM
+			       REPLY
+			  JOIN 
+			       BOARD B USING(MEM_NO)
+			  WHERE
+	               B.BOARD_NO = ?
+	           AND 
+	               B.BOARD_NAME = '피드게시판'
+	           AND
+	               REPLY_DELETE_YN = 'N'
+	</entry>
+	
+	
+	
+	
+	<entry key="deleteFeedBoard">
+		UPDATE
+		       BOARD
+		   SET 
+		       BOARD_DELETE_STATUS = 'Y'
+		 WHERE
+		       BOARD_NO = ?
+	</entry>
+	
+	
+	<entry key="selectFeedFormBoard">
+		SELECT 
+		      BOARD_NO,
+		      MEM_ID,
+		      BOARD_CONTENT,
+		      KEYWORD
+		FROM
+		      BOARD
+		JOIN
+		      MEMBER USING(MEM_NO)
+		WHERE
+		      BOARD_NO = ?
+	</entry>
+	
+	
+	<entry key="selectFeedAttachment">
+		SELECT 
+		      FILE_NO,
+		      ORIGIN_NAME,
+		      FILE_PATH,
+		      CHANGE_NAME
+		FROM
+		      ATTACHMENT
+		JOIN
+		      BOARD USING(BOARD_NO)
+		WHERE
+		      BOARD_NO = ?
+	</entry>
+	
+	
+	<entry key="updateFeedBoard">
+		
+		UPDATE 
+		       BOARD
+	       SET 
+	           BOARD_CONTENT = ?,
+	           KEYWORD = ?
+	     WHERE  
+	           BOARD_NO = ?
+	</entry>
+	
+	
+	
+	
+	<entry key="updateFeedAttachment">
+		UPDATE 
+		       ATTACHMENT
+		   SET 
+		   	   FILE_PATH = ?,
+		       ORIGIN_NAME = ?,
+		       CHANGE_NAME = ?
+		WHERE
+		       FILE_NO = ?
+	</entry>
+	
+	
+	
+	<!-- 좋아요 기능  -->
+	<entry key="insertLike">
+		INSERT
+		  INTO
+		       HEART
+		       (
+		       BOARD_NO,
+		       MEM_NO,
+		       HEART_YN
+		       )
+		VALUES
+		       (
+		       ?,
+		       ?,
+		       'Y'
+		       )
+	</entry>
+		
+	
+	<entry key="UpdateFeedBoardLikeCount">
+		UPDATE 
+		       BOARD
+		   SET 
+		   	  LIKE_COUNT = LIKE_COUNT + 1
+		WHERE
+		       BOARD_NO = ?
+	</entry>
+	
+	<entry key="selectFeedLikeBtn">
+		SELECT 
+		      COUNT(*) COUNT
+		FROM
+		      HEART
+		WHERE
+		      MEM_NO = ?
+		 AND
+		      BOARD_NO = ?
+	</entry>
+	
+	
+	<entry key="deleteLike">
+		DELETE
+		  FROM
+		       HEART
+		WHERE
+		       BOARD_NO = ?
+		  AND     
+		       MEM_NO = ?
+	</entry>
+	
+	<entry key="downFeedBoardLikeCount">
+		UPDATE 
+		       BOARD
+		   SET 
+		   	  LIKE_COUNT = LIKE_COUNT - 1
+		WHERE
+		       BOARD_NO = ?
+	</entry>
+	
+	<!-- 좋아요기능 끝 -->
+	
+	
+	
+	<!-- 댓글 목록 조회 기능  -->
+	<entry key="selectFeedReply">
+		SELECT
+		      REPLY_NO,
+		      MEM_ID,
+		      REPLY_CONTENT,
+		      TO_CHAR(REPLY_CREATE_DATE, 'YY/MM/DD HH:MI:SS') CREATE_DATE
+		  FROM
+		      REPLY
+		  JOIN
+		       MEMBER USING(MEM_NO)
+		WHERE
+		      BOARD_NO = ?
+		 AND
+		      REPLY_DELETE_YN = 'N'
+		ORDER
+		   BY
+		      REPLY_CREATE_DATE DESC 
+	</entry>
+	
+	<!-- 댓글 추가 기능 -->
+	<entry key="insertReply">
+	
+	INSERT
+		  INTO
+		      REPLY
+		      (
+		      REPLY_NO,
+		      MEM_NO,
+		      BOARD_NO,
+		      REPLY_CONTENT,
+		      REPLY_CREATE_DATE
+		      )
+		VALUES
+		      (
+		      SEQ_RPNO.NEXTVAL,
+		      ?,
+		      ?,
+		      ?,
+		      SYSDATE
+		      )
+	</entry>
+	
+	
+	<!-- 댓글삭제 -->
+	<entry key="deleteReply">
+		UPDATE
+		      REPLY
+		  SET 
+		     REPLY_DELETE_YN = 'Y'
+		WHERE 
+		     REPLY_NO = ?
+	</entry>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+</properties>
