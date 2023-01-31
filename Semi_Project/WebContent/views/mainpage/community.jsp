@@ -530,45 +530,32 @@
 							for(var i in list){
 								
 								result += '<div class="withboard-slide-outer">'
-								       +     '<div class="lign-left-wrap">'
-								       +       '<div class="withboard-img align-left">'
-		                               +        '<img src=' + list[i].titleImg + '; width="235" height="220">'
-		                               +       '</div>'
-		                               +       '<div class="withboard-content">'
-		                               
-		                               +       '<div class="content-margin">'
-		                               +          '<b></b>'
-		                               +       '</div>'
-		                               
-		                               +        '<div class="content-margin">'
-		                               +          '<p>' + list[i].boardContent + '</p>'
+								       +  	'<div class="lign-left-wrap">'
+								       +    	'<div class="withboard-img align-left">'
+		                               +    		'<img src=' + list[i].titleImg + '; width="235" height="220">'
 		                               +        '</div>'
-		                               +        '<div class="withboard-content-detail content-margin">'
-		                               +           '<div class="align-left-inline">'
-		                               +            '<img src="<%=contextPath%>/resources/뒷동산.jpg">'
-		                               +            '<p>' + list[i].memId + '</p>'
-		                               +        '</div>'
-		                               +        '<div class="align-right-inline">'
-		                               +          '<div class="align-left-inline">'
-		                               +            '<p> ♥ </p>'                                
-		                               +           '<p>' + '좋아요 ' + list[i].likeCount + '</p>'
+		                               +        '<div class="withboard-content">'
+		                               +        	'<div class="content-margin">'
+		                               +          		'<p>' + list[i].memId + '</p>'
+		                               +        	'</div>'
+		                               +    		'<div class="content-margin">'
+		                               +        		'<p>' + list[i].boardContent + '</p>'
+		                               +        	'</div>'
+		                               +        	'<div class="align-right-inline">'
+		                               +        		'<div class="align-left-inline">'
+		                               +        			'<p>' + list[i].likeCount + '명이 좋아합니다</p>'
+                                       +        		'</div>'
+                                       +        	'</div>'
                                        +        '</div>'
-                                       +       '</div>'
-                                       +      '</div>'
-                                       +     '</div>'
-                                       +    '</div>'
-                                       +   '</div>'
-                                       
+                                       +    '</div>' 
+                                       +  '</div>' 
 							};
 		                    $('#feedPreview-Content').html(result);
 						},
-						
 						error : function(){
 							console.log('불러오기 실패');
 						}
-						
 					});
-					
 				});
 			</script>
 
