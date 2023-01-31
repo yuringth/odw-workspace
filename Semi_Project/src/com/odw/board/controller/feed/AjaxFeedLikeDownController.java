@@ -23,33 +23,21 @@ import com.odw.member.model.vo.Member;
 public class AjaxFeedLikeDownController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public AjaxFeedLikeDownController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpWServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
 		int boardNo = Integer.parseInt(request.getParameter("bno"));
 		
-		int result = new FeedService().deleteLike(boardNo, memNo);
+		//int result = new FeedService().deleteLike(boardNo, memNo);
 		Board b = new FeedService().downLike(boardNo, memNo);
-		
 		
 		response.setContentType("application/json; charset=UTF-8");
 		
 		new Gson().toJson(b, response.getWriter());
-		
-		
-		
-		
 	}
 
 	/**

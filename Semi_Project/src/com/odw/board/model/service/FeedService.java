@@ -208,6 +208,7 @@ public class FeedService {
 		
 		int result1 = new FeedDao().deleteLike(conn, boardNo, memNo);
 		int result2 = new FeedDao().downFeedBoardLikeCount(conn, boardNo);
+		
 		Board b = new Board();
 		
 		if((result1 * result2) > 0) {
@@ -216,9 +217,7 @@ public class FeedService {
 		} else {
 			rollback(conn);
 		}
-		
 		close(conn);
-		
 		return b;
 	}
 	
