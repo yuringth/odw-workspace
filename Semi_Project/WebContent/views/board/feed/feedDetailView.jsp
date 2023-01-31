@@ -135,7 +135,7 @@
                 </table>
             </div>
         </div>
-        
+    </div>    
        
 
     </div>
@@ -282,6 +282,7 @@
 	}
 	
 	// 2. 좋아요 회원 스크립트
+	// 하트 클릭 시 feedLikeIncrease()함수 실행 되면서 +1 증가 후, feedLikeBtnChange()함수 실행
 	function feedLikeIncrease(){
 		$.ajax({
 			url : 'insertLike.fe',
@@ -289,18 +290,16 @@
 				bno : <%= b.getBoardNo() %>
 			},
 			success : function(b){
-				// // b에는 BOARD_NO, MEM_ID, BOARD_CONTENT, KEYWORD, LIKE_COUNT, MEM_NO 값들이 있다.
-
+				// b에는 BOARD_NO, MEM_ID, BOARD_CONTENT, KEYWORD, LIKE_COUNT, MEM_NO 데이터 있음.
 				$('#feedLikeCountArea').text(b.likeCount);
+				// 버튼 모양 변경 함수
             	feedLikeBtnChange();
 			},
 			error : function(){
-				console.log('좋아요 안댐')
+				console.log('좋아요 insert 실패')
 			}
-			
-		})
-		
-	}
+		});
+	};
 	
 	// 4. 
 	function feedLikeDown(){
@@ -331,6 +330,7 @@
 	}
 	
 	// 3.
+	// 버튼 모양 바뀜
 	function feedLikeBtnChange(){
 		<%if (loginUser != null) {%>
 			$.ajax({
@@ -343,18 +343,14 @@
 						$('#feedLike-btn-div').html('<button onclick="feedLikeDown();">♥</button>')
 					}else {
 						$('#feedLike-btn-div').html('<button onclick="feedLikeIncrease();">♡</button>')
-						
 					}
-					
 				},
 				error : function(){
-					console.log('버튼안바뀜')
+					console.log('버튼 변경 실패')
 				}
-				
-			})
-		
+			});
 		<%} %>
-	}
+	};
 		
 	
 	// 3.

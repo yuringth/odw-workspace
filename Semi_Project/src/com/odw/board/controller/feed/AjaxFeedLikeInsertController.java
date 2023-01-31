@@ -23,17 +23,10 @@ import com.odw.member.model.vo.Member;
 public class AjaxFeedLikeInsertController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public AjaxFeedLikeInsertController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpWServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
@@ -41,13 +34,9 @@ public class AjaxFeedLikeInsertController extends HttpServlet {
 		
 		Board b = new FeedService().insertLike(boardNo, memNo);
 		
-		
 		response.setContentType("application/json; charset=UTF-8");
 		
 		new Gson().toJson(b, response.getWriter());
-		
-		
-		
 		
 	}
 

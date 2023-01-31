@@ -410,7 +410,6 @@ public class FeedDao {
 			close(pstmt);
 		}
 		return result;
-		
 	}
 
 	//좋아요기능
@@ -439,9 +438,13 @@ public class FeedDao {
 	public int selectFeedLikeBtn(Connection conn, int boardNo, int memNo) {
 		
 		PreparedStatement pstmt = null;
+		
 		ResultSet rset = null;
+		
 		int result = 0;
+		
 		Board b = new Board();
+		
 		String sql = prop.getProperty("selectFeedLikeBtn");
 		
 		try {
@@ -450,11 +453,9 @@ public class FeedDao {
 			pstmt.setInt(1, memNo);
 			pstmt.setInt(2, boardNo);
 			
-			
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				
 				b.setResult(rset.getInt("COUNT"));
 				result = rset.getInt("COUNT");
 			}

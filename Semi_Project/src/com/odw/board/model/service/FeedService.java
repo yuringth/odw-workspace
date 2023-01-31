@@ -166,12 +166,14 @@ public class FeedService {
 
 
 	// 좋아요기능
+	// HEART테이블에 1행 insert / BOARD테이블에 좋아요수 +1 update / BOARD테이블에서 select
 	public Board insertLike(int boardNo, int memNo) {
 		
 		Connection conn = getConnection();
 		
 		int result1 = new FeedDao().insertLike(conn, boardNo, memNo);
 		int result2 = new FeedDao().UpdateFeedBoardLikeCount(conn, boardNo);
+		
 		Board b = new Board();
 		
 		if((result1 * result2) > 0) {
@@ -180,11 +182,8 @@ public class FeedService {
 		} else {
 			rollback(conn);
 		}
-		
 		close(conn);
-		
 		return b;
-		
 	}
 
 
