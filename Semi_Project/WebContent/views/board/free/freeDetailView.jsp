@@ -168,11 +168,10 @@ div{
 		</div>
 
 
-		<!-- 댓글창!! 일단 화면만 -->
-
+		<!-- 댓글 영역  -->
 		<div id="freeReply-area" align="center">
 			<table>
-				<br><br><br><br><br><br>
+				<br>
 				<thead>
 					<!-- 로그인 후 -->
 					<% if(loginUser != null) { %>
@@ -180,7 +179,7 @@ div{
 						<tr>
 							<th>댓글작성</th>
 							<td>
-								<textarea id="replyContent" cols="50" rows="3" style="resize:none;"></textarea>
+								<textarea id="replyContent" cols="45" rows="3" style="resize:none;"></textarea>
 							</td>
 							<td>
 								<button type="submit" onclick='insertReply();'>댓글등록</button>
@@ -188,7 +187,6 @@ div{
 						</tr>
 					<% } else { %>
 						<!-- 로그인 전 -->
-						
 						<tr>
 							<th>댓글작성</th>
 							<td>
@@ -201,11 +199,12 @@ div{
 					<% } %>		
 				</thead>
 				<tbody>
-				
-				
+					<!-- 댓글 띄워줄 공간 -->				
 				</tbody>
 			</table>
 		</div>
+
+
 
 	</div>
 
@@ -334,27 +333,22 @@ div{
     				boardNo : <%= b.getBoardNo() %>,
     				replyContent : $('#replyContent').val() // textarea는 input의 사촌(?)이여서 val씀
     				// 작성자는 지금 넘기지 않고 서블릿으로 넘어가서 session에서 뺄 것임
-    				
     			},
     			type : 'post', // 길기때문에
     			success : function(result){
-    				
     				// console.log(result);
     				if(result > 0){
     					
     					alert('댓글작성에 성공했습니다');
     					 $('#replyContent').val(''); // 빈문자열을 넣으면 textarea가 비워짐
     					 selectReplyList();
-    					
     				}
-    				
     			},
     			error : function(){
-    				console.log('댓글작성 실패(지워줘야함)');
+    				console.log('댓글작성 실패');
     			}
     		});
-    		
-    	}
+    	};
     </script>
     
     
