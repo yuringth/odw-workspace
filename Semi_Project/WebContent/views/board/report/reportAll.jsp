@@ -40,7 +40,6 @@
     <div class="outer" align="center">
         <form action="<%= contextPath %>/reportInsert.fr" method="post">
             <input type="hidden" name="boardNo" value="<%= b.getBoardNo() %>">
-            <input type="hidden" name="memId" value="<%= b.getMemId() %>">
             <table>
                 <tr>
                     <td colspan="2"><span>해당 사용자를 신고하시겠습니까?</span></td>

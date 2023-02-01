@@ -158,8 +158,6 @@ div{
 					</tr>
 					<% if(loginUser != null) { %>
 					<tr>
-						<input type="hidden" name="boardNo" id="boardNo" value="<%= b.getBoardNo() %>">
-						<input type="hidden" name="memId" id="memId" value="<%= b.getMemId() %>">
 						<td><button onclick="">프로필</button></td>
 						<td><button onclick='report();'>신고</button></td>
 					</tr>
@@ -214,7 +212,7 @@ div{
 	
 	<script>
 		function report(){
-	 		location.href='<%= contextPath %>/report.bo';
+			location.href='<%= contextPath %>/report.bo';
 		}
 		
 		/* 위에 버튼 삭제시 삭제하기 */
