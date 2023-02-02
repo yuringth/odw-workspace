@@ -877,6 +877,34 @@ SELECT
 		WHERE
 		      REPLY_NO = ?
 	</entry>
+	
+	
+	
+	<!-- 메인화면에 피드게시판 글 목록 불러오기 -->
+	<entry key="selectFreePreview">
+			SELECT * 
+		        FROM(SELECT ROWNUM RNUM, A.*
+		            FROM(
+		                SELECT 
+		                        BOARD_TITLE,
+		                        MEM_ID
+		                FROM
+		                        BOARD B
+		                JOIN
+		                        MEMBER
+		                USING
+		                        (MEM_NO)
+		                WHERE
+		                        B.BOARD_NAME = '자유게시판'
+		                AND 
+		                        BOARD_DELETE_STATUS = 'N'
+		                ORDER 
+		                    BY 
+		                        B.CREATE_DATE DESC) A)
+		WHERE RNUM BETWEEN 1 AND 6
+	</entry>
+	
+	
 
 	 
 </properties>

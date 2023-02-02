@@ -140,24 +140,11 @@
                         </td>
 
                     </tr>
-                    
-                    <tr>
-						<td>첨부파일명</td>
-							<!-- 첨부파일 있을수도 없을수도 있음  -->
-							<% if(at == null) { %>
-							  
-							<% } else { %>
-							<td>
-								<%= at.getOriginName() %>
-								
-							</td>
-							<% } %>
-					</tr>
                 </tbody>
                 <tfoot>
                     <tr id="feedBtn">
                         <td colspan="2" style="text-align:center;">
-                            <button type="submit" class="btn btn-secondary">업로드</button>
+                            <button type="submit" class="btn btn-secondary">수정</button>
                             <button type="button" class="btn btn-secondary" onclick="history.back()">목록가기</button> 
                         </td>
                     </tr>

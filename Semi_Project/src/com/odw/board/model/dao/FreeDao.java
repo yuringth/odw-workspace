@@ -519,7 +519,40 @@ public class FreeDao {
 	}
 	
 	
-	
+	// 메인화면에 자유게시판 글 목록 불러오기
+	public ArrayList<Board> selectFreePreview(Connection conn) {
+		
+		ArrayList<Board> list = new ArrayList();
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectFreePreview");
+		
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Board b = new Board();
+				
+				b.setBoardTitle(rset.getString("BOARD_TITLE"));
+				b.setMemId(rset.getString("MEM_ID"));
+			
+				list.add(b);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;		
+	}
 	
 	
 }

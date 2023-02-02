@@ -20,17 +20,10 @@ import com.odw.board.model.vo.Board;
 public class AjaxFeedPreviewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public AjaxFeedPreviewController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		ArrayList<Board> list = new FeedService().selectFeedPreview();
@@ -38,7 +31,6 @@ public class AjaxFeedPreviewController extends HttpServlet {
 		response.setContentType("application/json; charset=UTF-8");
 		
 		new Gson().toJson(list, response.getWriter());
-		
 	}
 
 	/**

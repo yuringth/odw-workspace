@@ -269,61 +269,11 @@
 
                 <!--자유게시판 틀 -->
                 <div class="smallboardform">
-                    <div class="board-form">
+                    <div class="board-form" id="freePreview-Content">
                         <!--자유게시판 게시글 하나-->
-                        <div class="freeboard-one align-left2">
-                            <div>
-                                <p>이건 제목이야</p>
-                            </div>
-                            <div>
-                                <p>작성자</p>
-                            </div>
-                        </div>
-
-                        <div class="freeboard-one align-left2">
-                            <div>
-                                <p>이건 제목이야</p>
-                            </div>
-                            <div>
-                                <p>작성자</p>
-                            </div>
-                        </div>
-
-                        <div class="freeboard-one align-left2">
-                            <div>
-                                <p>이건 제목이야</p>
-                            </div>
-                            <div>
-                                <p>작성자</p>
-                            </div>
-                        </div>
-
-                        <div class="freeboard-one align-left2">
-                            <div>
-                                <p>이건 제목이야</p>
-                            </div>
-                            <div>
-                                <p>작성자</p>
-                            </div>
-                        </div>
-
-                        <div class="freeboard-one align-left2">
-                            <div>
-                                <p>이건 제목이야</p>
-                            </div>
-                            <div>
-                                <p>작성자</p>
-                            </div>
-                        </div>
-
-                        <div class="freeboard-one align-left2">
-                            <div>
-                                <p>이건 제목이야</p>
-                            </div>
-                            <div>
-                                <p>작성자</p>
-                            </div>
-                        </div>
+                      
+                      
+                      
                     </div>
                 </div>
             </div>
@@ -364,6 +314,36 @@
         </div>
     </div>
 
+
+	<script>
+		$(function(){
+			
+			$.ajax({
+				
+				url : 'previewboard.fr',
+				
+				success : function(list){
+
+					var result = '';
+					
+					for(var i in list){
+						result += '<div class="freeboard-one align-left2">'
+						       + '<div>'
+						       + '<p>' + list[i].boardTitle + '</p>'
+						       + '</div>'
+						       + '<div>'
+						       + '<p>' + list[i].memId + '</p>'
+						       + '</div>'
+						       + '</div>'
+					};
+                    $('#freePreview-Content').html(result);
+				},
+				error : function(){
+					console.log('불러오기 실패');
+				}
+			});
+		});
+	</script>
 
 
 

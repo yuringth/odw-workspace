@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.odw.attachment.model.vo.Attachment;
+import com.odw.board.model.dao.FeedDao;
 import com.odw.board.model.dao.FreeDao;
 import com.odw.board.model.vo.Board;
 import com.odw.common.model.vo.PageInfo;
@@ -236,6 +237,19 @@ public class FreeService {
 	}
 	
 	
+	// 메인화면에 자유게시판 글 목록 불러오기
+	public ArrayList<Board> selectFreePreview() {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Board> list = new FreeDao().selectFreePreview(conn);
+		
+		close(conn);
+		
+		return list;	
+		
+	}
+		
 	
 	
 	
