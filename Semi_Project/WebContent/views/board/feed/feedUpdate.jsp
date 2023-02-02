@@ -13,15 +13,9 @@
 <meta charset="UTF-8">
 <title>글 수정(Update Post) db데이터 가져와서 화면띄워주기</title>
 
-
-
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Kalam&display=swap" rel="stylesheet">
 
-
-
 <style>
-
-	
 	.feedOuter{
 	    border: 1px solid black;
 	    text-align: center;
@@ -102,6 +96,7 @@
     
 	    <input type="hidden" name="feedMemNo" value="<%= loginUser.getMemNo() %>">
 	    <input type="hidden" name="feedBoardNo" value="<%= b.getBoardNo() %>">
+	    <input type="hidden" name="feedMemId" value="<%= loginUser.getMemId() %>">
 	    
        <div class="feedOuter">
             <table>
@@ -119,24 +114,23 @@
                             <div>
                                 <img id="feedImg" src="<%= request.getContextPath() %>/<%= at.getFilePath() %><%= at.getChangeName() %>" alt="사진미리보기" ><br>
                             </div>
-                            <div>
-                                <p></p>
-                            </div>
+                            <br>
                             <div id="feedFile-area" style="padding-left:90px;">
                                 <input type="file" name="feedFile" id="feedFile" required onchange="loadImg(this, 1);">
+								<div>
+									<%= at.getOriginName() %>
+									<input type="hidden" name="originFileNo" value="<%= at.getFileNo() %>">
+									<input type="hidden" name="originFileName" value="<%= at.getChangeName() %>">
+									<input type="hidden" name="originName" value="<%= at.getOriginName() %>">
+									<input type="hidden" name="fileNo" value="<%= at.getFileNo() %>">
+								</div>
                             </div>
                         </td>
                         
-                        
                         <td id="feedContent_2">
-                        
                             <div class="v-line">
                                 <hr>
                             </div>  
-                            
-                            <div id="feedMem">
-                                <a href="#"><input type="hidden" name="feedMemId" value="<%= loginUser.getMemId() %>"></a>
-                            </div>
                             <div>
                             	<div id="feedContent">Write a caption</div>
                                 <textarea name="feedContent" cols="30" rows="10" style="resize:none;"><%= b.getBoardContent() %></textarea>
@@ -147,7 +141,6 @@
 
                     </tr>
                     
-                    
                     <tr>
 						<td>첨부파일명</td>
 							<!-- 첨부파일 있을수도 없을수도 있음  -->
@@ -156,22 +149,16 @@
 							<% } else { %>
 							<td>
 								<%= at.getOriginName() %>
-								<input type="hidden" name="originFileNo" value="<%= at.getFileNo() %>">
-								<input type="hidden" name="originFileName" value="<%= at.getChangeName() %>">
-								<input type="hidden" name="originName" value="<%= at.getOriginName() %>">
-								<input type="hidden" name="fileNo" value="<%= at.getFileNo() %>">
 								
 							</td>
 							<% } %>
 					</tr>
-               
-                    
                 </tbody>
                 <tfoot>
                     <tr id="feedBtn">
                         <td colspan="2" style="text-align:center;">
                             <button type="submit" class="btn btn-secondary">업로드</button>
-                            <button type="text" class="btn btn-secondary" onclick="history.back()">목록가기</button> 
+                            <button type="button" class="btn btn-secondary" onclick="history.back()">목록가기</button> 
                         </td>
                     </tr>
                 </tfoot>
@@ -179,8 +166,6 @@
         </div>
     </form>
 
-	
-	
 	
 	
 	<script>
