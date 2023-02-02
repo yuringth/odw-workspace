@@ -190,9 +190,9 @@ justify-content: center;
     <br>
     <div>
     	<% if(loginUser != null) {%>
-        <a href="<%= contextPath %>/enroll.fe" class="btn btn-dark">글작성</a>
-        <% } %>
+     	   <a href="<%= contextPath %>/enroll.fe" class="btn btn-dark">글작성</a>
        <%--  <button onclick="window.open('<%= contextPath %>/upload.fe' , '업로드','width=850px, height=600px, top=300px, left=1000px')">글작성</button> --%>
+        <% } %>
     </div>
     <br>
 

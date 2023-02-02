@@ -101,6 +101,7 @@
   
     <form action="<%= contextPath %>/insert.fe" method="post" enctype="multipart/form-data">
     <input type="hidden" name="feedMemNo" value="<%= loginUser.getMemNo() %>">
+    <input type="hidden" name="feedMemId" value="<%= loginUser.getMemId() %>">
     
        <div class="feedOuter">
             <table>
@@ -114,11 +115,9 @@
                     <tr>
                         <td id="feedContent_1">
                             <div>
-                                <img id="feedImg" src="<%= contextPath %>/resources/odw_imageNo.jpg" alt="사진미리보기"><br>
+                                <img id="feedImg" src="<%= contextPath %>/resources/odw_imageNo.jpg" alt="더미사진"><br>
                             </div>
-                            <div>
-                                <p></p>
-                            </div>
+
                             <div id="feedFile-area">
                                 <input type="file" name="feedFile" id="feedFile" required onchange="loadImg(this, 1);">
                             </div>
@@ -130,13 +129,10 @@
                             <div class="v-line">
                                 <hr>
                             </div>  
-                            
-                            <div id="feedMem">
-                                <a href="#"><input type="hidden" name="feedMemId" value="<%= loginUser.getMemId() %>"></a>
-                            </div>
+                     
                             <div>
                             	<div id="feedContent">Write a caption</div>
-                                <textarea name="feedContent" cols="30" rows="10" sytle="resize:none;"></textarea>
+                                <textarea name="feedContent" cols="30" rows="10" style="resize:none;"></textarea>
                                 <div id="feedhash">#hashTag(Only One)</div>
                                 <input type="text" name="feedHash">
                             </div>
@@ -147,7 +143,7 @@
                     <tr id="feedBtn">
                         <td colspan="2" style="text-align:center;">
                             <button type="submit" class="btn btn-secondary">업로드</button>
-                            <button type="text" class="btn btn-secondary" onclick="history.back();">뒤로가기</button>
+                            <button type="reset" class="btn btn-secondary" onclick="history.back();">뒤로가기</button>
                         </td>
                     </tr>
                 </tfoot>

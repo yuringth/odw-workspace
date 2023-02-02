@@ -14,21 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 public class FeedEnrollFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public FeedEnrollFormController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		request.getRequestDispatcher("views/board/feed/feedUploadForm.jsp").forward(request, response);
-		
 	}
 
 	/**
