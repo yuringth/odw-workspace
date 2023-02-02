@@ -168,7 +168,7 @@
 	
 		function loadImg(inputFile, num){
 			// 현재 변화가 생긴 <input type="file"> 요소객체
-			// num 몇번쨰 input요소인지 확인 후 , 해당 영역에 미리보기를 하기 위해 받아주는 변수 
+			// num 몇번째 input요소인지 확인 후 , 해당 영역에 미리보기를 하기 위해 받아주는 변수 
 			// length 가지고 파일이 있는지 없는지 확인 가능 : 1 파일첨부시 / 0 파일취소시
 			
 			/* console.log(inputFile.files.length); */
