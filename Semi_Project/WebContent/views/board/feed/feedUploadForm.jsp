@@ -100,6 +100,7 @@
     <%@ include file="../../common/navbar.jsp" %>
   
     <form action="<%= contextPath %>/insert.fe" method="post" enctype="multipart/form-data">
+    
     <input type="hidden" name="feedMemNo" value="<%= loginUser.getMemNo() %>">
     <input type="hidden" name="feedMemId" value="<%= loginUser.getMemId() %>">
     
@@ -117,15 +118,14 @@
                             <div>
                                 <img id="feedImg" src="<%= contextPath %>/resources/odw_imageNo.jpg" alt="더미사진"><br>
                             </div>
-
                             <div id="feedFile-area">
                                 <input type="file" name="feedFile" id="feedFile" required onchange="loadImg(this, 1);">
                             </div>
                         </td>
                         
-                        
                         <td id="feedContent_2">
-                        
+                        	
+                        	<!-- 가운데 세로 선  -->
                             <div class="v-line">
                                 <hr>
                             </div>  
@@ -143,7 +143,7 @@
                     <tr id="feedBtn">
                         <td colspan="2" style="text-align:center;">
                             <button type="submit" class="btn btn-secondary">업로드</button>
-                            <button type="reset" class="btn btn-secondary" onclick="history.back();">뒤로가기</button>
+                            <button type="button" class="btn btn-secondary" onclick="history.back();">뒤로가기</button>
                         </td>
                     </tr>
                 </tfoot>
@@ -197,8 +197,8 @@
 			 	if(num == 1){
 					$('#feedImg').attr('src', src="<%= contextPath %>/resources/odw_imageNo.jpg");
 				} 
-			}
-		}
+			};
+		};
 	</script>
 
 

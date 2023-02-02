@@ -33,6 +33,7 @@ public class FeedDao {
 	
 	
 	public int insertFeedBoard(Connection conn, Board b) {
+		
 		// insert -> 1행
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -53,12 +54,12 @@ public class FeedDao {
 		} finally {
 			close(pstmt);
 		}
-		
 		return result;
 	}
 	
 	
 	public int insertFeedAttachment(Connection conn, Attachment at) {
+		
 		int result = 1;
 		PreparedStatement pstmt = null;
 		
@@ -78,7 +79,6 @@ public class FeedDao {
 		} finally {
 			close(pstmt);
 		}
-		
 		return result;
 	}
 	

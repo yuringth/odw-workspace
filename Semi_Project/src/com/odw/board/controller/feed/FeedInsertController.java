@@ -24,23 +24,15 @@ import com.oreilly.servlet.MultipartRequest;
 public class FeedInsertController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public FeedInsertController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// 사진첨부, 아이디, 내용
 		// 1) 인코딩
 		request.setCharacterEncoding("UTF-8");
-		
 		
 		// 2) 첨부파일 잘 들어갔는지 확인
 		if(ServletFileUpload.isMultipartContent(request)) {
@@ -67,7 +59,6 @@ public class FeedInsertController extends HttpServlet {
 			b.setMemNo(feedMemNo);
 			b.setMemId(feedMemId);
 			b.setKeyword(feedHash);
-			
 		
 //			System.out.println(b);
 			
@@ -84,22 +75,13 @@ public class FeedInsertController extends HttpServlet {
 			
 			// 6) 응답뷰
 			if(result > 0) { //성공
-				
 				request.getSession().setAttribute("alertMsg", "게시글 작성 성공");
 				response.sendRedirect(request.getContextPath() + "/list.fe");
-
 			} else {
 				request.getSession().setAttribute("alertMsg", "게시글 작성 실패");
 				request.getRequestDispatcher("views/common/erroPage.jsp").forward(request, response);
-				
 			}
-			
-			
-			
 		}
-			
-		
-		
 	}
 
 	/**
