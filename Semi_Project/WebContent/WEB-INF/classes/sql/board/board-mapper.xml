@@ -829,7 +829,6 @@ SELECT
 
 	<!-- 댓글기능 -->
 	<entry key="selectFreeReplyList">
-	
 		SELECT
 		      REPLY_NO,
 		      MEM_ID,

@@ -244,10 +244,10 @@ div{
     
     
     
-    <!-- 댓글 띄워주기 기능 -->
+    <!-- 댓글 띄워주기 기능 / 댓글목록을 읽어오는 함수 -->
     <script>
     
-    	function selectReplyList(){ // 댓글목록을 읽어오는 함수
+    	function selectReplyList(){ 
     		
     		$.ajax({
     			url : 'rlist.fr' ,
@@ -255,10 +255,6 @@ div{
     				boardNo : <%= b.getBoardNo() %>
     			},
     			success : function(list){ 
-    				// 로그인한 유저와 댓글작성자가 다를 경우 => 삭제버튼 안보이게
-    				// 로그인한 유저와 댓글작성자가 같을 경우 => 삭제버튼 보이게
-    				// 로그인 하지않은 유저 => 삭제버튼 안보이게
-    				
     				
     				// 댓글 개수만큼 반복 => 누적(문자열)
     				var result = '';
@@ -284,9 +280,12 @@ div{
 	     					       + '<td>' + list[i].memId + '</td>'
 	     					       + '<td>' + list[i].replyContent + '</td>'
 	     					       + '<td>' + list[i].createDate + '</td>'
-	     					       + '<td>' + '<a href="' + '<%= contextPath %>' + '/deleteReply.fr?replyNo=' + list[i].replyNo + '&bno=' + <%= b.getBoardNo() %> + '">삭제</a>' + '</td>'
+	     					       + '<td>' + '<a href="' 
+	     					       + '<%= contextPath %>' + '/deleteReply.fr?replyNo=' + list[i].replyNo + '&bno=' + <%= b.getBoardNo() %> 
+	     					       + '">삭제</a>' + '</td>'
 	     						   + '</tr>'
 	    					}
+    					
     					<% } else { %>
     					// 로그인 하지않은 유저 => 삭제버튼 안보이게 
     					result += '<tr>'
@@ -297,7 +296,6 @@ div{
 						   + '</tr>'
 						<% } %>
     				}
-    				
     				$('#freeReply-area tbody').html(result);
     			},
     			eroor : function(){
@@ -306,7 +304,9 @@ div{
     		});
     	};
     	
-    	// 댓글은 화면이 로딩되었을때 곧바로 뿌려줘야함 => window.onload => $(function(){})
+    	
+    	// 댓글은 화면이 로딩되었을때 뿌려줘야함 => window.onload => $(function(){})
+    	
     	$(function(){
     		
     		selectReplyList();
@@ -314,8 +314,6 @@ div{
     		setInterval(selectReplyList, 1000); // 일정시간 내에 반복적인 내용을 호출함
     		
     	});
-    	
-    	
     	
     </script>
     

@@ -212,10 +212,10 @@ public class FreeService {
 		} else {
 			rollback(conn);
 		}
+		
 		close(conn);
 		
 		return result;
-		
 	}
 
 
@@ -233,7 +233,6 @@ public class FreeService {
 		close(conn);
 		
 		return result;
-		
 	}
 	
 	

@@ -19,36 +19,23 @@ import com.odw.reply.model.vo.Reply;
 public class AjaxFreeReplyInsertController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public AjaxFreeReplyInsertController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// post 인코딩
 		request.setCharacterEncoding("UTF-8");
 		
-		
 		// 값뽑기
 		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 		String replyContent = request.getParameter("replyContent");
 		
-//		System.out.println(boardNo);
-		
-		
-		// 로그인한 회원정보
+		// 로그인한 회원정보 데이터 뽑기
 		int memNo = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();
 		
-//		System.out.println(memNo);
-		
-		// vo객체로 가공 => reply
+		// reply VO객체로 가공하여 뽑은 데이터 담기 
 		Reply r = new Reply();
 		r.setBoardNo(boardNo);
 		r.setReplyContent(replyContent);
@@ -57,15 +44,12 @@ public class AjaxFreeReplyInsertController extends HttpServlet {
 		//서비스 호출
 		int result = new FreeService().insertReply(r);
 		
-		System.out.println(result);
-		
 		// 응답 => ajax가 할것임~
 		// Gson, Json => 넘겨야할 값이 여러개일때 묶을때(vo, 객체배열, 등등)
 		// => result는 0 아님 1임
 		response.setContentType("text/html; charset=UTF-8");
 		
 		response.getWriter().print(result);
-	
 	}
 
 	/**

@@ -452,7 +452,6 @@ public class FreeDao {
 			
 			while(rset.next()) {
 				
-				
 				Reply r = new Reply();
 				r.setReplyNo(rset.getInt("REPLY_NO"));
 				r.setMemId(rset.getString("MEM_ID"));
@@ -497,6 +496,7 @@ public class FreeDao {
 
 
 	public int deleteReply(Connection conn, int replyNo) {
+		
 		// update문 => 1행 수정
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -515,9 +515,7 @@ public class FreeDao {
 		} finally {
 			close(pstmt);
 		}
-		
 		return result;
-		
 	}
 	
 	

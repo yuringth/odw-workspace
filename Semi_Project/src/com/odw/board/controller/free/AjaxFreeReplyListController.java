@@ -20,19 +20,11 @@ import com.odw.reply.model.vo.Reply;
 public class AjaxFreeReplyListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public AjaxFreeReplyListController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		
 		// get방식 => 왜??
 		
@@ -50,8 +42,6 @@ public class AjaxFreeReplyListController extends HttpServlet {
 		response.setContentType("application/json; charset=UTF-8"); 
 		new Gson().toJson(list, response.getWriter());
 		// => Gson 따로 키값을 지정안하면 키값 == 필드명
-		
-		
 	}
 
 	/**
