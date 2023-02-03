@@ -49,7 +49,6 @@
 <%@ include file="../../common/navbar.jsp" %>
 
 
-
     <div class="outer" style="margin : auto; width : 1000px">
 		<br>
 		<h2 align="center" id="feedPost">post</h2>
@@ -68,75 +67,79 @@
             <div>
                 <table>
                     <tr>
-                        <div class="feedIdArea-div">
-                            <a href="#"><%= b.getMemId() %></a>
-                        </div>
-                        <hr>
-                    <tr>
-                        <span class="feedIdArea-div">
-                            <a href="#"><%= b.getMemId() %></a>
-                        </span>
-                        <span id="feedBoardContentArea">
-                        	<%= b.getBoardContent() %>
-                        </span>
+                    	<td>
+	                        <div class="feedIdArea-div">
+	                            <a href="#"><%= b.getMemId() %></a>
+	                        </div>
+	                        <hr>
+                        </td>
                     </tr>
                     <tr>
-                    	<div id="feedKeywordArea">
-                    		<% if(b.getKeyword() != null) { %>
-                       			<a href="#">#<%= b.getKeyword() %></a>
-                       		<% } else { %>
-							<% } %>                       		
-                    	</div>
-                        <hr>
+                    	<td>
+	                        <span class="feedIdArea-div">
+	                            <a href="#"><%= b.getMemId() %></a>
+	                        </span>
+	                        <span id="feedBoardContentArea">
+	                        	<%= b.getBoardContent() %>
+	                        </span>
+                        </td>
+                    </tr>
+                    <tr>
+                   		<td>
+	                    	<div id="feedKeywordArea">
+	                    		<% if(b.getKeyword() != null) { %>
+	                       			<a href="#">#<%= b.getKeyword() %></a>
+	                       		<% } else { %>
+	                       		
+								<% } %>                       		
+	                    	</div>
+	                        <hr>
+                        </td>
                     </tr>
                     
-                    
-                   
                     <!-- 좋아요 기능 : ajax기능 사용 -->
-                    <div>
-                         <tr>
-		                   	<div style="display : flex;">
-		                       
-		                        <div id="feedLike-btn-div" >
-		                        	
-		                        	<% if(loginUser != null){ %>
-		                        		<button onclick="feedLikeIncrease();">♡</button>
-		                        	<%} else {%>
-		                        		<button onclick="feedloginplease();">♡</button>
-		                        	<%} %>
-		                        	
-		                        </div>
-		                        <div style="margin-left : 10px;" id="feedLikeCountArea"> <%= b.getLikeCount() %> </div>
+					<tr>
+	                    <td>
+		                 	<div style="display : flex;">
+			                    <div id="feedLike-btn-div" >
+			                    	<% if(loginUser != null){ %>
+			                   			<button onclick="feedLikeIncrease();">♡</button>
+			                    	<%} else {%>
+			                    		<button onclick="feedloginplease();">♡</button>
+			                    	<%} %>
+			                    </div>
+		                    	<div style="margin-left : 10px;" id="feedLikeCountArea"> <%= b.getLikeCount() %> </div>
 		                    </div>
-	                    </tr>
-	                    
-	                
-	                    <tr>
+	                    </td>
+                    </tr>
+                    <tr>
+	                    <td>
 	                    	<% if(loginUser != null) { %>
 		                   		<div style="padding-top : 0px">
-			                                     댓글 &nbsp; <input type="text" id="replyContent">
+			                               댓글 &nbsp; <input type="text" id="replyContent">
 			                        <button onclick="insertReply();">댓글등록</button>
 		                        </div>
 	                        <% } else { %>
 		                   		<div style="padding-top : 0px">
-			                        <input type="text" value="로그인을 해주세요" onlyread>
+			                        <input type="text" value="로그인을 해주세요" readonly>
 			                        <button disabled>댓글등록</button>
 		                        </div>                        
 	                        <% } %>
-                	    </tr>
-	                    <tr>
+                        </td>
+               	    </tr>
+                    <tr>
+	                    <td>
 	                    <!--     <div>게시글 작성자 : <a href="#"><%= b.getMemId() %></a></div> -->
 	                        <div id="feedReply-area" style="overflow:scroll; width:400px; height:300px;">
 	                          	  댓글이 없습니다.
 	                        </div>
-	                    </tr>
-                    </div>
-                  
+                        </td>
+                    </tr>
+                 
                 </table>
             </div>
         </div>
     </div>    
-       
 
     </div>
     
