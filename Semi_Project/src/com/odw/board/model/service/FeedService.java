@@ -202,6 +202,7 @@ public class FeedService {
 
 
 	public Board downLike(int boardNo, int memNo) {
+		
 		Connection conn = getConnection();
 		
 		int result1 = new FeedDao().deleteLike(conn, boardNo, memNo);

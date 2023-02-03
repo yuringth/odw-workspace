@@ -71,16 +71,15 @@
       </entry>	
 	
 	
-	
 	<entry key="detailFeedBoard">
 		SELECT
 		       BOARD_NO, 
 		       MEM_ID,
 		       BOARD_CONTENT,
 		       KEYWORD,
-		       <!-- 좋아요기능때문에 LIKE_COUNT 컬럼 추가함(SQL문재사용) -->
+		       <!-- 좋아요 기능에 필요 -->
 		       LIKE_COUNT,
-		       <!-- 댓글작성 기능때문에 MEM_NO 컬럼 추가함 -->
+		       <!-- 댓글 기능에 필요 -->
 		       MEM_NO
 		  FROM
 		       BOARD
@@ -198,6 +197,8 @@
 	
 	
 	<!-- 좋아요 기능  -->
+	
+	<!-- 좋아요 +1 할 때, HEART테이블에 insert  -->
 	<entry key="insertLike">
 		INSERT
 		  INTO
@@ -214,15 +215,15 @@
 		       'Y'
 		       )
 	</entry>
-		
 	
+	<!-- 좋아요 +1 할 때, 좋아요 숫자 update -->
 	<entry key="UpdateFeedBoardLikeCount">
 		UPDATE 
-		       BOARD
+		      BOARD
 		   SET 
 		   	  LIKE_COUNT = LIKE_COUNT + 1
 		WHERE
-		       BOARD_NO = ?
+		      BOARD_NO = ?
 	</entry>
 	
 	<entry key="selectFeedLikeBtn">
@@ -236,24 +237,25 @@
 		      BOARD_NO = ?
 	</entry>
 	
-	
+	<!-- 좋아요 -1 할 때, HEART테이블에 delete  -->
 	<entry key="deleteLike">
 		DELETE
 		  FROM
-		       HEART
+		      HEART
 		WHERE
-		       BOARD_NO = ?
+		      BOARD_NO = ?
 		  AND     
-		       MEM_NO = ?
+		      MEM_NO = ?
 	</entry>
 	
+	<!-- 좋아요 -1 할 때, 좋아요 숫자 update -->
 	<entry key="downFeedBoardLikeCount">
 		UPDATE 
-		       BOARD
+		      BOARD
 		   SET 
 		   	  LIKE_COUNT = LIKE_COUNT - 1
 		WHERE
-		       BOARD_NO = ?
+		      BOARD_NO = ?
 	</entry>
 	
 	<!-- 좋아요기능 끝 -->

@@ -53,111 +53,98 @@
 		<br>
 		<h2 align="center" id="feedPost">post</h2>
 		<br>
-
         <div style="display:flex">
-
-        <div id="feedImg">
-            <img src="<%= at.getFilePath() %>" id="feedMainImg">
-            
-            <br>
-                        
-        </div>
-
-        <div id="feedInfo" style="height:500px; padding-left:15px;">
-            <div>
-                <table>
-                    <tr>
-                    	<td>
-	                        <div class="feedIdArea-div">
-	                            <a href="#"><%= b.getMemId() %></a>
-	                        </div>
-	                        <hr>
-                        </td>
-                    </tr>
-                    <tr>
-                    	<td>
-	                        <span class="feedIdArea-div">
-	                            <a href="#"><%= b.getMemId() %></a>
-	                        </span>
-	                        <span id="feedBoardContentArea">
-	                        	<%= b.getBoardContent() %>
-	                        </span>
-                        </td>
-                    </tr>
-                    <tr>
-                   		<td>
-	                    	<div id="feedKeywordArea">
-	                    		<% if(b.getKeyword() != null) { %>
-	                       			<a href="#">#<%= b.getKeyword() %></a>
-	                       		<% } else { %>
-	                       		
-								<% } %>                       		
-	                    	</div>
-	                        <hr>
-                        </td>
-                    </tr>
-                    
-                    <!-- 좋아요 기능 : ajax기능 사용 -->
-					<tr>
-	                    <td>
-		                 	<div style="display : flex;">
-			                    <div id="feedLike-btn-div" >
-			                    	<% if(loginUser != null){ %>
-			                   			<button onclick="feedLikeIncrease();">♡</button>
-			                    	<%} else {%>
-			                    		<button onclick="feedloginplease();">♡</button>
-			                    	<%} %>
-			                    </div>
-		                    	<div style="margin-left : 10px;" id="feedLikeCountArea"> <%= b.getLikeCount() %> </div>
-		                    </div>
-	                    </td>
-                    </tr>
-                    <tr>
-	                    <td>
-	                    	<% if(loginUser != null) { %>
-		                   		<div style="padding-top : 0px">
-			                               댓글 &nbsp; <input type="text" id="replyContent">
-			                        <button onclick="insertReply();">댓글등록</button>
+	        <div id="feedImg">
+	            <img src="<%= at.getFilePath() %>" id="feedMainImg">
+	            <br>
+	        </div>
+	        <div id="feedInfo" style="height:500px; padding-left:15px;">
+	            <div>
+	                <table>
+	                    <tr>
+	                    	<td>
+		                        <div class="feedIdArea-div">
+		                            <a href="#"><%= b.getMemId() %></a>
 		                        </div>
-	                        <% } else { %>
-		                   		<div style="padding-top : 0px">
-			                        <input type="text" value="로그인을 해주세요" readonly>
-			                        <button disabled>댓글등록</button>
-		                        </div>                        
-	                        <% } %>
-                        </td>
-               	    </tr>
-                    <tr>
-	                    <td>
-	                    <!--     <div>게시글 작성자 : <a href="#"><%= b.getMemId() %></a></div> -->
-	                        <div id="feedReply-area" style="overflow:scroll; width:400px; height:300px;">
-	                          	  댓글이 없습니다.
-	                        </div>
-                        </td>
-                    </tr>
-                 
-                </table>
-            </div>
-        </div>
-    </div>    
-
+		                        <hr>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                    	<td>
+		                        <span class="feedIdArea-div">
+		                            <a href="#"><%= b.getMemId() %></a>
+		                        </span>
+		                        <span id="feedBoardContentArea">
+		                        	<%= b.getBoardContent() %>
+		                        </span>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                   		<td>
+		                    	<div id="feedKeywordArea">
+		                    		<% if(b.getKeyword() != null) { %>
+		                       			<a href="#">#<%= b.getKeyword() %></a>
+		                       		<% } else { %>
+		                       		
+									<% } %>                       		
+		                    	</div>
+		                        <hr>
+	                        </td>
+	                    </tr>
+						<tr>
+		                    <td>
+			                 	<div style="display : flex;">
+				                    <div id="feedLike-btn-div" >
+				                    	<% if(loginUser != null){ %>
+				                   			<button onclick="feedLikeIncrease();">♡</button>
+				                    	<%} else {%>
+				                    		<button onclick="feedloginplease();">♡</button>
+				                    	<%} %>
+				                    </div>
+			                    	<div style="margin-left : 10px;" id="feedLikeCountArea"> <%= b.getLikeCount() %> </div>
+			                    </div>
+		                    </td>
+	                    </tr>
+	                    <tr>
+		                    <td>
+		                    	<% if(loginUser != null) { %>
+			                   		<div style="padding-top : 0px">
+				                               댓글 &nbsp; <input type="text" id="replyContent">
+				                        <button onclick="insertReply();">댓글등록</button>
+			                        </div>
+		                        <% } else { %>
+			                   		<div style="padding-top : 0px">
+				                        <input type="text" value="로그인을 해주세요" readonly>
+				                        <button disabled>댓글등록</button>
+			                        </div>                        
+		                        <% } %>
+	                        </td>
+	               	    </tr>
+	                    <tr>
+		                    <td>
+		                        <div id="feedReply-area" style="overflow:scroll; width:400px; height:300px;">
+		                        	<!-- 댓글 띄울 공간 -->
+		                        </div>
+	                        </td>
+	                    </tr>
+	                 
+	                </table>
+	            </div>
+	        </div>
+	    </div>    
     </div>
     
-        
-        <div align="center">
-        	<br>
-        	<% if(loginUser != null && loginUser.getMemId().equals(b.getMemId())) { %>
-        	
-	        	<input type="hidden" name="feedBoardNo" value=<%= b.getBoardNo() %>>
-	        	<a href="<%= contextPath %>/updateForm.fe?feedBoardNo=<%= b.getBoardNo() %>" style="height:60px; width:100px;" class="btn btn-dark">수정</a>
-	        	<a href="<%= contextPath %>/delete.fe?feedBoardNo=<%= b.getBoardNo() %>" style="height:60px; width:100px;" class="btn btn-dark">삭제</a>
-        	<% } %>
-	        	<a href="<%= contextPath %>/list.fe"  style="height:60px; width:100px;" class="btn btn-dark">목록가기</a>
-	        	
-	        	<br>
-        </div>
-
-
+    
+    <div align="center">
+    	<br>
+    	<% if(loginUser != null && loginUser.getMemId().equals(b.getMemId())) { %>
+	     	<input type="hidden" name="feedBoardNo" value=<%= b.getBoardNo() %>>
+	     	<a href="<%= contextPath %>/updateForm.fe?feedBoardNo=<%= b.getBoardNo() %>" style="height:60px; width:100px;" class="btn btn-dark">수정</a>
+	     	<a href="<%= contextPath %>/delete.fe?feedBoardNo=<%= b.getBoardNo() %>" style="height:60px; width:100px;" class="btn btn-dark">삭제</a>
+    	<% } %>
+	     	<a href="<%= contextPath %>/list.fe"  style="height:60px; width:100px;" class="btn btn-dark">목록가기</a>
+     	<br>
+    </div>
 
 
 
@@ -173,8 +160,6 @@
 			
 		})
 	
-	
-		
 		// 1.
 		// 댓글 목록 띄워주기 스크립트
 		function selectReplyList(){
@@ -279,60 +264,21 @@
 <!-- 좋아요 기능 ////////////////////////////////////////////////////////////////////////////////////////////////////////// -->	
 	
 	<script>
-	// 1. 좋아요 비회원 스크립트
+	
+
+	// window.onload() 창이 다 로딩이 된 후에 실행할 놈이 괄호 안에 들어있다. == $(function()){ 실행할 행동 })
+	
+	// 비회원이 좋아요 누를 시
 	function feedloginplease(){
 		alert('로그인 해주세요');
 	}
+		
+	// 화면이 로딩되면 먼저 실행 될 함수
+	$(function(){
+		feedLikeBtnChange();
+	})
 	
-	// 2. 좋아요 회원 스크립트
-	// 하트 클릭 시 feedLikeIncrease()함수 실행 되면서 +1 증가 후, feedLikeBtnChange()함수 실행
-	function feedLikeIncrease(){
-		$.ajax({
-			url : 'insertLike.fe',
-			data : {
-				bno : <%= b.getBoardNo() %>
-			},
-			success : function(b){
-				// b에는 BOARD_NO, MEM_ID, BOARD_CONTENT, KEYWORD, LIKE_COUNT, MEM_NO 데이터 있음.
-				$('#feedLikeCountArea').text(b.likeCount);
-				// 버튼 모양 변경 함수
-            	feedLikeBtnChange();
-			},
-			error : function(){
-				console.log('좋아요 insert 실패')
-			}
-		});
-	};
-	
-	// 4. 
-	function feedLikeDown(){
-		$.ajax({
-			url : 'downLike.fe',
-			data : {
-				bno : <%= b.getBoardNo() %>
-			},
-			success : function(b){
-				/*
-					b= {
-						likeCount : 0,
-						memNo : 1,
-						keyword : '해시태그',
-						...
-						}
-				likeCount를 꺼내야하니까 b에 . 을 찍어서 접근한 후에 이 객체배열 안에 있는
-				likeCount 를 가져온다 => b.likeCount
-				*/
-            	$('#feedLikeCountArea').text(b.likeCount);
-            	feedLikeBtnChange();
-			},
-			error : function(){
-				console.log('좋아요 안댐')
-			}
-		});
-	};
-	
-	// 3.
-	// 버튼 모양 바뀜
+	// 하트 버튼 모양 함수
 	function feedLikeBtnChange(){
 		<%if (loginUser != null) {%>
 			$.ajax({
@@ -355,11 +301,58 @@
 	};
 		
 	
-	// 3.
-	// window.onload() 창이 다 로딩이 된 후에 실행할 놈이 괄호 안에 들어있다. == $(function()){ 실행할 행동 })
-	$(function(){
-		feedLikeBtnChange();
-	})
+
+	
+	// 하트 클릭 시 feedLikeIncrease()함수 실행 되면서 +1 증가 후, feedLikeBtnChange()함수 실행
+	// b에는 BOARD_NO, MEM_ID, BOARD_CONTENT, KEYWORD, LIKE_COUNT, MEM_NO 데이터 있음.
+	// 회원이 좋아요 누를 시 (+1)
+	function feedLikeIncrease(){
+		$.ajax({
+			url : 'insertLike.fe',
+			data : {
+				bno : <%= b.getBoardNo() %>
+			},
+			success : function(b){
+			
+				$('#feedLikeCountArea').text(b.likeCount);
+				// 하트 버튼 모양 함수
+            	feedLikeBtnChange();
+			},
+			error : function(){
+				console.log('좋아요 insert 실패')
+			}
+		});
+	};
+	
+	// 회원이 좋아요 누를 시 (-1)
+	function feedLikeDown(){
+		$.ajax({
+			url : 'downLike.fe',
+			data : {
+				bno : <%= b.getBoardNo() %>
+			},
+			success : function(b){
+				/*
+					b= {
+						likeCount : 0,
+						memNo : 1,
+						keyword : '해시태그',
+						...
+						}
+				likeCount를 꺼내야하니까 b에 . 을 찍어서 접근한 후에 이 객체배열 안에 있는
+				likeCount 를 가져온다 => b.likeCount
+				*/
+            	$('#feedLikeCountArea').text(b.likeCount);
+				// 하트 버튼 모양 함수
+            	feedLikeBtnChange();
+			},
+			error : function(){
+				console.log('좋아요 delete 실패')
+			}
+		});
+	};
+	
+
 	
 	</script>
 	
