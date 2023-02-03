@@ -235,17 +235,30 @@
 		      MEM_NO = ?
 		 AND
 		      BOARD_NO = ?
+		 AND
+		      HEART_YN = 'Y'
 	</entry>
 	
-	<!-- 좋아요 -1 할 때, HEART테이블에 delete  -->
+	<!-- 좋아요 -1 할 때, HEART테이블에 update / delete  -->
 	<entry key="deleteLike">
-		DELETE
+		UPDATE
+		       HEART
+		   SET
+		       HEART_YN = 'N'
+		 WHERE
+		       BOARD_NO = ?
+		   AND
+		       MEM_NO = ?
+	
+        <!--
+     	DELETE
 		  FROM
 		      HEART
 		WHERE
 		      BOARD_NO = ?
 		  AND     
-		      MEM_NO = ?
+		      MEM_NO = ? 
+		-->
 	</entry>
 	
 	<!-- 좋아요 -1 할 때, 좋아요 숫자 update -->

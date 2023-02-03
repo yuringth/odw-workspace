@@ -13,6 +13,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 <body>
 	
@@ -32,9 +33,7 @@
 		   -->
 
 		<form action="<%= contextPath %>/insert.fr" method="post" id="enroll-form" enctype="multipart/form-data">
-			
 			<input type="hidden" name="memNo" value="<%= loginUser.getMemNo() %>">
-			
 			<table align="center">
                 <tr>
                     <th>말머리</th>
@@ -46,7 +45,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th cols="80">제목</th>
+                    <th>제목</th>
                     <td><input type="text" name="boardTitle" style="width:700px;" required></td>
                 </tr>
 				<tr>
@@ -65,13 +64,11 @@
 
 			<div align="center">
                 <button type="submit" class="btn btn-success">등록하기</button>
-				<!-- <button type="submit" class="btn btn-sm btn-primary">등록하기</button> -->
-            
 				<button type="button" class="btn btn-info" onclick="history.back();">뒤로가기</button>
-				<!-- history.back() 이전 페이지로 돌아가게 해주는 함수 : history에 내가 온 경로가 있으니까 거기로 다시 back해서 요청을 보낸 것 -->
 			</div>
 		</form>
 	</div>
+
 
 	<script>
 		<%-- function enroll(){

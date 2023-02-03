@@ -66,7 +66,7 @@
       <tbody>
        	<!-- 게시글 출력 : 게시글이 있을 수도 있고, 없을 수도 있다. -->
        	<% if(list.isEmpty()) { %>
-      		조회된 게시글이 없습니다.
+       		조회된 게시글이 없습니다
       	<% } else { %>
 	      	<% for(Board b : list) { %>
 		        <tr>
@@ -92,35 +92,30 @@
         <br>
         
         <% if(loginUser != null) { %>
-        <div align="center">
-            <a href="<%= contextPath %>/enrollForm.fr" class="btn btn-dark">글작성</a>
-        </div>
+	        <div align="center">
+	            <a href="<%= contextPath %>/enrollForm.fr" class="btn btn-dark">글작성</a>
+	        </div>
         <% } %>
+        
         <br>
 
         
         <div align="center" class="paging-area">
-		
 			<% if(currentPage != 1) { %>	
-			<button class="btn btn-sm btn-info" onclick="location.href='<%= contextPath %>/list.fr?cpage=<%= currentPage - 1 %>'">&lt;</button>
+				<button class="btn btn-sm btn-info" onclick="location.href='<%= contextPath %>/list.fr?cpage=<%= currentPage - 1 %>'">&lt;</button>
 			<% } %>
-			
-			
 			<% for(int i = startPage; i <= endPage; i++) { %>
 				<% if(currentPage != i) { %>
-				<!-- 현재 페이지가 i가 아니라면 onclick 할 수 있으며, 그게 아니라면 disabled로 클릭이 불가능하다 -->
 					<button class="btn btn-sm btn-info" onclick="location.href='<%= contextPath %>/list.fr?cpage=<%= i %>'"><%= i %></button>
 				<% } else { %>
 					<button class="btn btn-sm btn-info" disabled><%= i %></button>
 				<% } %>
 			<% } %>
-			
 			<% if(maxPage != currentPage) { %>
-			<button class="btn btn-sm btn-info" onclick="location.href='<%= contextPath %>/list.fr?cpage=<%= currentPage +1 %>'">&gt;</button>
+				<button class="btn btn-sm btn-info" onclick="location.href='<%= contextPath %>/list.fr?cpage=<%= currentPage +1 %>'">&gt;</button>
 			<% } %>
-			
-
 		</div>
+		
 		<br><br><br>
     
   </div>
