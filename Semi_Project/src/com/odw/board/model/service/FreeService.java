@@ -54,7 +54,7 @@ public class FreeService {
 		int result1 = new FreeDao().insertFreeBoard(conn, b);
 		
 		// 2) attachment 테이블에 insert 
-		int result2 = 1; // 0으로 초기화를 하면 board insert가 되면 1이 되기때문에. 또한 result1(1)*result2(0)=0이 된다
+		int result2 = 1; // 1로 초기화 하는 이유 : 첨부파일은 null일 수도 있기에 1로 초기화를 해야 board insert가 되면  result1(1)*result2(1) = 1 로 결과값이 출력되기때문
 		if(at != null) {
 			result2 = new FreeDao().insertFreeAttachment(conn, at);
 		}
@@ -68,10 +68,7 @@ public class FreeService {
 			rollback(conn);
 		}
 		close(conn);
-		
 		return (result1 * result2);
-		
-		
 	}
 	
 	public Board detailFreeBoard(int boardNo) {

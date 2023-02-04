@@ -648,6 +648,7 @@ SELECT
  	</entry>
  
  
+  	<!-- 게시글 작성 시 insert문  -->
  	<entry key="insertFreeBoard">
  		INSERT
 		  INTO
@@ -670,7 +671,8 @@ SELECT
 		      ?
 		      )
  	</entry>
- 	
+
+ 	<!-- 첨부파일 업로드 시 insert문 -->
  	<entry key="insertFreeAttachment">
 	 	INSERT
 		  INTO
@@ -691,7 +693,6 @@ SELECT
 		        ?
 		        )	
  	</entry>
- 	
  	
  	<entry key="detailFreeBoard">
 	 	SELECT

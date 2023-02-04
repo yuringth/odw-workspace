@@ -297,7 +297,6 @@
 	
 	<!-- 댓글 추가 기능 -->
 	<entry key="insertReply">
-	
 	INSERT
 		  INTO
 		      REPLY

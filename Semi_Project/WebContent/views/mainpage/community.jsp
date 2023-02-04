@@ -463,42 +463,26 @@
 
 
 
-    <!--피드게시판-->
-
+    		<!--피드게시판-->
             <div>
                 <div id="withboard-wrap" class="main-wrap outer">
                     <div>
-                        <!-- 게시판으로 가는 놈이랑 더보기 버튼-->
                         <p class="board-btn">피드 게시판</p>
                         <button class="more-btn btn btn-outline-secondary" onclick="location.href='list.fe'">더보기</button>
                         <br clear="both">
                     </div>
-
                     <div>
-                        <div></div>
-                        <div></div>
-                        
-                        
-                        <!--슬라이드 전체 -->
+                        <!-- 슬라이드 전체 -->
                         <div class="slider-wrap align-left" id="feedPreview-Content">
-
-                            
-
-
+							<!-- DB에서 가져온 데이터 뿌릴 영역 -->
                         </div>
-
-
-
                     </div>
-
                    <br><br><br><br><br>
-                    
                 </div>
             </div>
             
 			<script>
 				$(function(){
-					
 					$.ajax({
 						
 						url : 'previewboard.fe',
@@ -510,24 +494,24 @@
 							for(var i in list){
 								
 								result += '<div class="withboard-slide-outer">'
-								       +  	'<div class="lign-left-wrap">'
-								       +    	'<div class="withboard-img align-left">'
-		                               +    		'<img src=' + list[i].titleImg + '; width="235" height="220">'
-		                               +        '</div>'
-		                               +        '<div class="withboard-content">'
-		                               +        	'<div class="content-margin">'
-		                               +          		'<p>' + list[i].memId + '</p>'
-		                               +        	'</div>'
-		                               +    		'<div class="content-margin">'
-		                               +        		'<p>' + list[i].boardContent + '</p>'
-		                               +        	'</div>'
-		                               +        	'<div class="align-right-inline">'
-		                               +        		'<div class="align-left-inline">'
-		                               +        			'<p>' + list[i].likeCount + '명이 좋아합니다</p>'
-                                       +        		'</div>'
-                                       +        	'</div>'
-                                       +        '</div>'
-                                       +    '</div>' 
+								       +  '<div class="lign-left-wrap">'
+								       +  '<div class="withboard-img align-left">'
+		                               +  '<img src=' + list[i].titleImg + '; width="235" height="220">'
+		                               +  '</div>'
+		                               +  '<div class="withboard-content">'
+		                               +  '<div class="content-margin">'
+		                               +  '<p>' + list[i].memId + '</p>'
+		                               +  '</div>'
+		                               +  '<div class="content-margin">'
+		                               +  '<p>' + list[i].boardContent + '</p>'
+		                               +  '</div>'
+		                               +  '<div class="align-right-inline">'
+		                               +  '<div class="align-left-inline">'
+		                               +  '<p>' + list[i].likeCount + '명이 좋아합니다</p>'
+                                       +  '</div>'
+                                       +  '</div>'
+                                       +  '</div>'
+                                       +  '</div>' 
                                        +  '</div>' 
 							};
 		                    $('#feedPreview-Content').html(result);

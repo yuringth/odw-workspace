@@ -149,31 +149,24 @@
 
 
 	
-<!-- 댓글 기능 ////////////////////////////////////////////////////////////////////////////////////////////////////////// -->	
+	<!-- 댓글 기능 -->	
 	<script>
-	
 		// 2.
 		//$(function) : html문서가 다 로딩 되면 제일 먼저 실행하는 함수
 		$(function(){
-			
 			selectReplyList();
-			
-		})
+		});
 	
 		// 1.
-		// 댓글 목록 띄워주기 스크립트
+		// 댓글 목록 
 		function selectReplyList(){
-		
 			$.ajax({
 				url : 'rlist.fe',
 				data : {
 					boardNo : <%= b.getBoardNo() %>
 				},
-				////////				
 				success : function(list){
 					
-					//console.log(list)
-
 					// 댓글 개수 만큼 반복 => 누적(문자열)
 					var result = '';
 					
@@ -201,8 +194,6 @@
 									       + '<td>' + '<a href="' + '<%= contextPath %>' + '/deleteReply.fe?replyNo=' + list[i].replyNo + '&feedBoardNo=' + <%= b.getBoardNo() %> + '">삭제</a>' + '</td>'
 									       + '</tr>'
 								}      
-						
-						
 						 <% } else {%> // 조건 1 : 로그인이 되어있지 않은 경우 => 삭제 버튼 안보임
 							 result += '<tr>'
 								   + '<td id="replyContentHide">' + list[i].replyNo + '</td>'
@@ -212,9 +203,7 @@
 							       + '</tr>'
 						 <% } %>
 					}
-					
 					$('#feedReply-area').html(result);
-					
 				},
 				error : function(){
 					console.log('댓글읽어오기 실패');	
@@ -223,13 +212,12 @@
 		};
 	</script>
 
-
 	
 	<!-- memId : '<%= b.getMemId() %>', -->
 	<script>
 	
 	// 3.
-	// 댓글 달기 스크립트 
+	// 댓글 insert 
 	function insertReply(){
 	<% if(loginUser != null) { %>
 		$.ajax({
@@ -241,7 +229,6 @@
 				
 			},
 			type : 'post',
-			///////////////////
 			success : function(result){
 				$('#replyContent').val('');	
 				selectReplyList();
