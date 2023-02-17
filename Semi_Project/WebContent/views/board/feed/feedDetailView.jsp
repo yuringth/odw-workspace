@@ -255,7 +255,7 @@
 
 	// window.onload() 창이 다 로딩이 된 후에 실행할 놈이 괄호 안에 들어있다. == $(function()){ 실행할 행동 })
 	
-	// 비회원이 좋아요 누를 시
+	// 비회원이 좋아요 누를 시 알림창 함수
 	function feedloginplease(){
 		alert('로그인 해주세요');
 	}
@@ -274,9 +274,9 @@
 					bno : <%= b.getBoardNo() %>
 				},
 				success : function(result){
-					if (result > 0) {
+					if (result > 0) { // 조건에 맞는 결과가 있으면 눌렀다는 의미로 ♥
 						$('#feedLike-btn-div').html('<button onclick="feedLikeDown();">♥</button>')
-					}else {
+					}else { // 조건에 맞는 결과가 없으면 누르지않았다는 의미로 ♡
 						$('#feedLike-btn-div').html('<button onclick="feedLikeIncrease();">♡</button>')
 					}
 				},

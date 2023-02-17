@@ -486,13 +486,12 @@
 					$.ajax({
 						
 						url : 'previewboard.fe',
-						
+
 						success : function(list){
-							
+						
 							var result = '';
 							
 							for(var i in list){
-								
 								result += '<div class="withboard-slide-outer">'
 								       +  '<div class="lign-left-wrap">'
 								       +  '<div class="withboard-img align-left">'
