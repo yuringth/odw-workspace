@@ -54,7 +54,7 @@
 https://www.erdcloud.com/d/YnnmiXgooJQQprfQr
 
 ### 카카오 오븐
-https://ovenapp.io/project/
+https://ovenapp.io/project/wPyEaYgciMaipqPmxOSssoQUJ8I9DoR7#dWCOv
 <br>
 
 
